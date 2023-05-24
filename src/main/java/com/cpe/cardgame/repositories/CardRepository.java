@@ -4,6 +4,7 @@ import com.cpe.cardgame.model.Card;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -17,4 +18,10 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
     List<Card> findAllByUserId(Integer userId);
 
     Page<Card> findAllByUserId(Integer userId, Pageable pageable);
+
+    @Query(value = "SELECT * FROM cardschem.card WHERE user_id = 0", nativeQuery = true)
+    List<Card> findAllByUserIdZero();
+
+    @Query(value = "SELECT * FROM cardschem.card WHERE user_id = :user_id", nativeQuery = true)
+    List<Card> findAllByUserId(int user_id);
 }
