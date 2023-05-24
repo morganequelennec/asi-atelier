@@ -134,19 +134,123 @@ web service, JSP, JavaBean, EJB et JMS.**
 
 **Expliquer la philosophie « Convention over Configuration » de Spring boot ?**
 
-**Expliquer ce qu’il se passe lors de l’exécution «SpringApplication .run(App.class,args) »
-Qu’est ce qu’un DAO ? En quoi est-ce intéressant d’utiliser ce pattern ? Qu’est ce qu’un Singleton ?
-Que permet de réaliser les Entity dans Spring boot ? Est-ce spécifique à SpringBoot ?**
+**Expliquer ce qu’il se passe lors de l’exécution «SpringApplication .run(App.class,args) » Qu’est ce qu’un DAO ? En quoi est-ce intéressant d’utiliser ce pattern ? Qu’est ce qu’un Singleton ? Que permet de réaliser les Entity dans Spring boot ? Est-ce spécifique à SpringBoot ?**
+
+Lors de l'exécution de SpringApplication.run(App.class, args), Spring Boot initialise l'application en démarrant le conteneur Spring, en analysant la configuration de l'application et en lançant l'application en tant qu'application Spring Boot autonome.
+
+Plus précisément, voici ce qui se passe lors de cette exécution :
+
+Spring Boot analyse la classe App.class fournie en paramètre, qui est généralement une classe de configuration principale annotée avec @SpringBootApplication.
+Le conteneur Spring est initialisé, ce qui crée un contexte d'application Spring.
+Le contexte d'application Spring est configuré en fonction des annotations et des configurations définies dans la classe App.class et les classes associées.
+Les dépendances de l'application sont résolues et instanciées, y compris les beans configurés et les composants détectés par Spring.
+L'application est démarrée et est prête à répondre aux requêtes ou à exécuter les tâches configurées.
+Maintenant, passons aux autres concepts :
+
+DAO (Data Access Object) : Le DAO est un modèle de conception (pattern) qui permet d'encapsuler l'accès aux données de la couche de persistance dans une application. Le DAO fournit une interface entre la logique métier de l'application et la source de données, qu'il s'agisse d'une base de données, d'un service web ou d'autres mécanismes de stockage. Il permet d'abstraire les détails spécifiques de l'accès aux données et facilite le maintien, la réutilisation et les tests de l'application.
+
+Intérêt du pattern DAO : L'utilisation du pattern DAO permet de séparer la logique métier de l'accès aux données, améliorant ainsi la maintenabilité, la modularité et la testabilité du code. Il facilite également la gestion des transactions, la gestion des erreurs et permet de remplacer plus facilement la source de données sous-jacente sans impacter la logique métier.
+
+Singleton : Singleton est un modèle de conception (pattern) qui garantit qu'une classe ne possède qu'une seule instance dans une application. Cette instance unique est accessible globalement. Le Singleton est souvent utilisé pour des objets partagés et des ressources uniques dans une application.
+
+Entity dans Spring Boot : Dans Spring Boot, les entités (Entity) sont des classes POJO (Plain Old Java Objects) qui représentent des objets persistants, généralement mappés à des tables dans une base de données relationnelle. Les entités sont annotées avec des annotations spécifiques telles que @Entity, @Table, @Column, etc., pour définir la structure de la table, les relations avec d'autres entités et les propriétés de l'entité.
+
+Spécificité de l'utilisation des entités dans Spring Boot : L'utilisation d'entités dans Spring Boot est basée sur le framework Java Persistence API (JPA), qui est une spécification standard pour la gestion de la persistance des données dans les applications Java. Spring Boot facilite l'intégration de JPA avec des bibliothèques telles que Hibernate pour la gestion des entités. Cependant, l'utilisation d'entités n'est pas spécifique à Spring Boot, car elle peut également être utilisée dans d'autres frameworks Java basés sur JPA pour gérer la persistance des données.
 
 **Combien d’instances avez-vous crées lors de l’usage de «Service » en Spring boot? Pourquoi ?**
 
+Lors de l'utilisation du mot-clé Service en Spring Boot, une seule instance est généralement créée par défaut par le conteneur Spring, à moins que vous spécifiiez une configuration différente.
+
+Le rôle d'une classe annotée avec @Service est d'implémenter la logique métier de votre application. Ces classes sont généralement utilisées pour encapsuler des opérations complexes ou des traitements spécifiques. L'annotation @Service indique à Spring que cette classe est un bean de service.
+
+Par défaut, Spring crée une seule instance d'un bean lorsqu'il est annoté avec @Service et est géré par le conteneur Spring. Cette instance est généralement partagée par l'ensemble de l'application et peut être injectée dans d'autres composants, tels que des contrôleurs ou d'autres services.
+
+Cette approche garantit une utilisation efficace des ressources et permet le partage de l'état et des données entre différents composants de l'application.
+
+Cependant, il est important de noter que vous pouvez également configurer le scope (portée) d'un bean @Service en utilisant l'annotation @Scope. Par exemple, vous pouvez définir le scope comme @Scope("prototype") pour créer une nouvelle instance à chaque demande d'injection.
+
+Dans l'ensemble, le comportement par défaut de Spring est de créer une seule instance d'un bean @Service pour une utilisation globale dans l'application, à moins que vous ne spécifiiez explicitement une autre configuration de scope.
+
 **Que fournit le CRUD Repository de Spring boot ? Que sont les CRUD ?**
 
-**Qui réalise l’implémentation de la méthode findByProperty lors de la création d’un repository en
-Spring Boot ?**
+
+Le CRUD Repository de Spring Boot est une interface fournie par Spring Data JPA qui offre un ensemble de méthodes prédéfinies pour effectuer des opérations CRUD (Create, Read, Update, Delete) sur une entité dans une base de données.
+
+Le CRUD Repository fournit les fonctionnalités suivantes :
+
+Create (Créer) : Il offre des méthodes pour créer de nouveaux enregistrements dans la base de données. Par exemple, la méthode save() permet d'ajouter un nouvel enregistrement ou de mettre à jour un enregistrement existant.
+
+Read (Lire) : Il offre des méthodes pour récupérer des enregistrements depuis la base de données. Par exemple, les méthodes findById() et findAll() permettent respectivement de rechercher un enregistrement par son identifiant et de récupérer tous les enregistrements d'une entité.
+
+Update (Mettre à jour) : Il offre des méthodes pour mettre à jour des enregistrements existants dans la base de données. Par exemple, la méthode save() permet également de mettre à jour un enregistrement en lui attribuant de nouvelles valeurs.
+
+Delete (Supprimer) : Il offre des méthodes pour supprimer des enregistrements de la base de données. Par exemple, les méthodes deleteById() et delete() permettent de supprimer respectivement un enregistrement par son identifiant et un enregistrement spécifié.
+
+En utilisant le CRUD Repository, vous n'avez pas besoin d'écrire manuellement des requêtes SQL pour effectuer ces opérations de base sur la base de données. Spring Data JPA se charge de générer automatiquement les requêtes SQL appropriées en fonction des méthodes définies dans l'interface de repository.
+
+Les opérations CRUD (Create, Read, Update, Delete) sont des opérations de base dans la persistance des données. Elles représentent les actions fondamentales que l'on peut effectuer sur les données d'une application.
+
+Create (Créer) : Il s'agit de l'opération permettant de créer de nouveaux enregistrements dans la base de données.
+Read (Lire) : Il s'agit de l'opération permettant de récupérer les données existantes de la base de données.
+Update (Mettre à jour) : Il s'agit de l'opération permettant de modifier les enregistrements existants dans la base de données.
+Delete (Supprimer) : Il s'agit de l'opération permettant de supprimer des enregistrements de la base de données.
+L'utilisation des opérations CRUD est courante dans le développement d'applications pour gérer la persistance des données et assurer la manipulation des données de manière cohérente et fiable.
+
+**Qui réalise l’implémentation de la méthode findByProperty lors de la création d’un repository en Spring Boot ?**
+
+Lors de la création d'un repository avec Spring Boot, l'implémentation de la méthode findByProperty est générée automatiquement par Spring Data JPA.
+
+Spring Data JPA est une extension de Spring qui facilite l'interaction avec les bases de données relationnelles en fournissant une couche d'abstraction sur JPA. Elle utilise des conventions de nommage pour générer des requêtes SQL à partir des noms de méthodes définis dans les interfaces de repository.
+
+Pour générer automatiquement la méthode findByProperty, Spring Data JPA analyse le nom de la méthode et crée dynamiquement une requête qui correspond à la propriété spécifiée. Par exemple, si vous avez une entité Person avec une propriété name, en définissant une méthode findByname dans votre interface de repository, Spring Data JPA générera automatiquement la requête SQL pour rechercher les enregistrements correspondants dans la base de données en fonction de la propriété name.
+
+Cela permet d'éviter d'écrire manuellement des requêtes SQL pour les opérations CRUD courantes, car Spring Data JPA les génère automatiquement en fonction des méthodes définies dans l'interface du repository.
+
+Il est important de noter que pour que cette génération automatique fonctionne correctement, les noms des méthodes dans l'interface de repository doivent suivre les conventions de nommage de Spring Data JPA. Si vous utilisez une convention de nommage incorrecte ou si vous avez besoin d'une requête plus complexe, vous pouvez utiliser des annotations spécifiques telles que @Query pour définir manuellement la requête à exécuter.
 
 **Comment gère -t-on les relations One To One, One to Many et Many to Many avec JPA ?**
 
-**Qu’est ce qu’une Architecture SOA ? Qu’est ce qu’une architecture Micro Service ? Il y a-t-il d’autres
-architectures existantes ? Quels sont leurs avantages/inconvénients ?**
+JPA (Java Persistence API) est une spécification de la plateforme Java EE qui définit une interface de programmation pour la gestion de la persistance des objets dans les bases de données relationnelles. JPA fournit des annotations et des annotations XML pour mapper les objets Java aux tables de la base de données, y compris la gestion des relations entre les entités.
+
+Voici comment vous pouvez gérer les différentes relations avec JPA :
+
+Relation One-to-One (Un à un) :
+
+Dans JPA, vous pouvez gérer une relation One-to-One en utilisant l'annotation @OneToOne dans vos entités.
+Par exemple, si vous avez une entité Person avec une relation One-to-One vers l'entité Address, vous pouvez annoter le champ address dans Person avec @OneToOne et utiliser l'annotation @JoinColumn pour spécifier la clé étrangère.
+Relation One-to-Many (Un à plusieurs) :
+
+Pour gérer une relation One-to-Many avec JPA, vous pouvez utiliser l'annotation @OneToMany.
+Par exemple, si vous avez une entité Customer avec une relation One-to-Many vers l'entité Order, vous pouvez annoter le champ orders dans Customer avec @OneToMany et utiliser l'annotation @JoinColumn pour spécifier la clé étrangère.
+Relation Many-to-Many (Plusieurs à plusieurs) :
+
+JPA gère les relations Many-to-Many en utilisant une table de jointure.
+Vous pouvez utiliser l'annotation @ManyToMany pour annoter les champs correspondants dans les entités qui ont cette relation.
+Par exemple, si vous avez une entité Student avec une relation Many-to-Many vers l'entité Course, vous pouvez annoter le champ courses dans Student avec @ManyToMany et utiliser l'annotation @JoinTable pour spécifier la table de jointure.
+Il est important de noter que ces annotations JPA définissent la relation entre les entités au niveau de l'objet. JPA se charge de mapper ces relations dans la base de données en créant les tables appropriées et en gérant les clés étrangères.
+
+Il est également possible d'utiliser des annotations supplémentaires, telles que mappedBy et cascade, pour configurer plus en détail le comportement des relations, la suppression en cascade, etc.
+
+Il est recommandé de consulter la documentation officielle de JPA pour obtenir plus de détails et d'exemples sur la gestion des relations avec JPA, car il existe différentes stratégies de mapping et d'autres options de configuration en fonction de vos besoins spécifiques.
+
+**Qu’est ce qu’une Architecture SOA ? Qu’est ce qu’une architecture Micro Service ? Il y a-t-il d’autres architectures existantes ? Quels sont leurs avantages/inconvénients ?**
+
+
+Une architecture SOA (Service-Oriented Architecture) est un style d'architecture logicielle qui favorise la construction d'applications en tant que services modulaires et interconnectés. Dans une architecture SOA, les différentes fonctionnalités de l'application sont conçues comme des services indépendants qui peuvent être réutilisés et combinés pour créer des applications plus complexes. Les services communiquent entre eux via des protocoles standardisés tels que SOAP (Simple Object Access Protocol) ou REST (Representational State Transfer).
+
+D'autre part, une architecture Microservices (ou architecture à micro-services) est un style d'architecture logicielle dans lequel une application est divisée en un ensemble de services autonomes, indépendants et de petite taille, appelés microservices. Chaque microservice est responsable d'une fonctionnalité spécifique et communique avec les autres microservices via des mécanismes légers tels que les API REST. Chaque microservice peut être développé, déployé, mis à l'échelle et géré indépendamment, ce qui favorise la flexibilité et la facilité de maintenance des systèmes.
+
+Il existe également d'autres architectures logicielles, notamment :
+
+Architecture monolithique : Il s'agit d'une architecture traditionnelle où une application est développée comme une entité unique et autonome. Toutes les fonctionnalités sont regroupées dans un seul code source et déployées ensemble. Les avantages de cette approche sont sa simplicité et sa facilité de déploiement initial. Cependant, cela peut entraîner une complexité accrue à mesure que l'application grandit et devient plus difficile à maintenir.
+
+Architecture en couches (Layered architecture) : Cette architecture divise une application en différentes couches, telles que la présentation, la logique métier et l'accès aux données. Chaque couche offre des fonctionnalités spécifiques et communique avec les couches adjacentes. Cela permet une séparation des responsabilités et une facilité de maintenance, mais peut entraîner une dépendance accrue entre les couches.
+
+Architecture orientée événements (Event-driven architecture) : Cette approche se concentre sur les événements et les échanges asynchrones entre les composants du système. Les composants réagissent aux événements en fonction de leurs abonnements, ce qui permet une communication souple et une évolutivité élevée. Cependant, la gestion des événements peut être complexe et nécessite une bonne compréhension du flux d'événements.
+
+Les avantages et inconvénients de chaque architecture peuvent varier en fonction des besoins spécifiques d'un projet. Cependant, en général :
+
+- SOA favorise la réutilisation des services, la flexibilité et l'intégration, mais peut entraîner une complexité accrue en raison de la nécessité de gérer des contrats de service et des protocoles de communication.
+- Les microservices permettent une évolutivité et une maintenance plus faciles, une indépendance des services et une flexibilité de déploiement, mais peuvent augmenter la complexité opérationnelle et nécessiter une bonne gestion de la communication entre les microservices.
+- Les architectures monolithiques sont simples à développer et à déployer, mais peuvent être difficiles à maintenir et à faire évoluer.
 
