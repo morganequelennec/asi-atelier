@@ -1,0 +1,25 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Card Information</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div>
+    <h1>Card Information</h1>
+    <p><strong>Affinity:</strong> <span th:text="${cardData.affinity}"></span></p>
+    <p><strong>Name:</strong> <span th:text="${cardData.name}"></span></p>
+    <p><strong>Description:</strong> <span th:text="${cardData.description}"></span></p>
+    <p><strong>Family:</strong> <span th:text="${cardData.family}"></span></p>
+    <p><strong>Image URL:</strong> <span th:text="${cardData.imgUrl}"></span></p>
+    <p><strong>Small Image URL:</strong> <span th:text="${cardData.smallImgUrl}"></span></p>
+    <p><strong>Energy:</strong> <span th:text="${cardData.energy}"></span></p>
+    <p><strong>HP:</strong> <span th:text="${cardData.hp}"></span></p>
+    <p><strong>Defence:</strong> <span th:text="${cardData.defence}"></span></p>
+    <p><strong>Attack:</strong> <span th:text="${cardData.attack}"></span></p>
+    <p><strong>Price:</strong> <span th:text="${cardData.price}"></span></p>
+    <p><strong>User ID:</strong> <span th:text="${cardData.userId}"></span></p>
+</div>
+</body>
+</html>
