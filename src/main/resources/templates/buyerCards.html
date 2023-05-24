@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Card</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <style>
+        /* Define your custom CSS styles here */
+        .card {
+            width: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .card .button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #ccc;
+            color: #fff;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+        .card .view-button {
+            background-color: #007bff;
+        }
+        .card .buy-button {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+<div class="card" th:each="card : ${cardList}">
+    <h3 th:text="${card.name}"></h3>
+    <p th:text="${card.description}"></p>
+    <a class="button view-button" th:href="@{/view-card/{cardId}(cardId=${card.id})}">View</a>
+    <form th:action="@{/sell-card/{cardId}(cardId=${card.id})}" method="post">
+        <input type="submit" class="button buy-button" value="Sell" />
+    </form>
+</div>
+</body>
+</html>

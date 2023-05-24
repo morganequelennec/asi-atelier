@@ -33,7 +33,7 @@
     <h3 th:text="${card.name}"></h3>
     <p th:text="${card.description}"></p>
     <a class="button view-button" th:href="@{/view-card/{cardId}(cardId=${card.id})}">View</a>
-    <form th:action="@{/buy-card/{cardId}/user/{userId}(cardId=${card.id}, userId=${userId})}" method="post">
+    <form th:action="@{/buy-card/{cardId}(cardId=${card.id})}" method="post">
         <input type="submit" class="button buy-button" value="Buy" />
     </form>
 </div>

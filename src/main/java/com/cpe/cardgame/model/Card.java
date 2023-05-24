@@ -21,6 +21,17 @@ public class Card {
     private Double attack;
     private Double price;
 
+    public Boolean getToSell() {
+        return toSell;
+    }
+
+    public void setToSell(Boolean toSell) {
+        this.toSell = toSell;
+    }
+
+    private Boolean toSell;
+
+
     @Column(name = "user_id")
     private Integer userId;
 

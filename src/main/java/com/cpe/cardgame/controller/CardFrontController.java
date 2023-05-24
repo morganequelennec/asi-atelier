@@ -6,6 +6,7 @@ import com.cpe.cardgame.service.CardService;
 import com.cpe.cardgame.service.UserService;
 import com.cpe.cardgame.viewmodel.AuthDTO;
 import com.cpe.cardgame.viewmodel.CardForm;
+import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -43,12 +44,34 @@ public class CardFrontController {
         model.addAttribute("cardData", test.getResponse());
         return "viewCard";
     }
-
+//var id = Integer.valueOf((String) httprequest.getSession().getAttribute("USER")); HttpServletRequest httprequest
     @RequestMapping(value="/buy-card", method = RequestMethod.GET)
     public String buyCardList(Model model){
         var test = this.cardController.getAllCardsBuyable();
         model.addAttribute("cardList", test.getResponse());
         return "buyCard";
+    }
+
+    @RequestMapping(value="/get-my-cards", method = RequestMethod.GET)
+    public String getMyCards(Model model, HttpServletRequest httprequest){
+        var data = httprequest.getSession().getAttribute("USER");
+        if(data == null)
+        {
+            AuthDTO authForm = new AuthDTO();
+            model.addAttribute("connectForm", authForm);
+            return "connectForm";
+        }
+        var id = (Integer)data;
+        if(id == null)
+        {
+            AuthDTO authForm = new AuthDTO();
+            model.addAttribute("connectForm", authForm);
+            return "connectForm";
+        }
+        var test = this.cardController.getAllCardsByUserId(id);
+
+        model.addAttribute("cardList", test.getResponse());
+        return "buyerCards";
     }
 
 }

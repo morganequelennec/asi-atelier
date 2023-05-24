@@ -17,6 +17,16 @@ public class CardForm {
     private Double price;
     private Integer userId;
 
+    public Boolean getToSell() {
+        return toSell;
+    }
+
+    public void setToSell(Boolean toSell) {
+        this.toSell = toSell;
+    }
+
+    private Boolean toSell;
+
     public String getName() {
         return name;
     }
@@ -127,6 +137,7 @@ public class CardForm {
         card.setAttack(this.getAttack());
         card.setPrice(this.getPrice());
         card.setUserId(this.getUserId());
+        card.setToSell(this.getToSell());
 
         return card;
     }
