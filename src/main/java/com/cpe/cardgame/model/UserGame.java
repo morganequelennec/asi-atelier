@@ -16,6 +16,16 @@ public class UserGame {
     private String surName;
     private String email;
 
+    public String getSession() {
+        return session;
+    }
+
+    public void setSession(String session) {
+        this.session = session;
+    }
+
+    private String session;
+
     public Integer getId() {
         return id;
     }

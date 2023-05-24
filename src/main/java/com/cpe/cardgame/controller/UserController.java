@@ -5,6 +5,8 @@ import com.cpe.cardgame.service.UserService;
 import com.cpe.cardgame.utils.ResponseMessage;
 import com.cpe.cardgame.viewmodel.AuthDTO;
 
+import jakarta.servlet.http.HttpServletRequest;
+
 import org.springframework.ui.Model;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
@@ -41,8 +43,9 @@ public class UserController {
 		return "connectForm";
 	}
     @RequestMapping(value="/connexion", method = RequestMethod.POST)
-    public String connecUser(@ModelAttribute("connectForm") AuthDTO userform){
-        var test = this.userService.connect(userform.getUsername(), userform.getPassword());
+    public String connecUser(@ModelAttribute("connectForm") AuthDTO userform, HttpServletRequest httprequest){
+        var user = this.userService.connect(userform.getUsername(), userform.getPassword());
+        httprequest.getSession().setAttribute("USER", user.getResponse().getId());
         return "index";
     }
 
@@ -54,7 +57,7 @@ public class UserController {
 	}
     @RequestMapping(value="/create-user", method = RequestMethod.POST)
     public String createUserAction(Model model,@ModelAttribute("createForm") UserGame userform){
-        var test = this.userService.updateUser(userform);
+        var user = this.userService.updateUser(userform);
         AuthDTO authForm = new AuthDTO();
 		model.addAttribute("connectForm", authForm);
         return "connectForm";
