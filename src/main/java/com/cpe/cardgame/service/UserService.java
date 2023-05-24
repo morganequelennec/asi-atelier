@@ -45,5 +45,20 @@ public class UserService {
         return responseMessage;
     }
 
+    public ResponseMessage<UserGame> connect(String login, String pwd){
+        var result = userRepository.findUserConnexion(pwd, login);
+        ResponseMessage<UserGame> responseMessage = new ResponseMessage<UserGame>(result.get());
+        if(!result.isPresent())
+        {
+            responseMessage.setResponseCode(ResponseCode.NOT_FOUND);
+            responseMessage.setMessage("User not found");
+        }
+        else
+        {
+            responseMessage.setResponseCode(ResponseCode.SUCCESS);
+        }
+        return responseMessage;
+    }
+
     // Other methods for CRUD operations or custom queries can be defined here
 }

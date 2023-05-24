@@ -1,0 +1,54 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8" />
+<title>Welcome</title>
+<link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+
+</head>
+<body>
+	<form th:action="@{/create-user}"
+         th:object="${createForm}" method="POST">
+		<fieldset >
+			<div >
+                <label  for="form-color">Account</label>
+				<div >
+					<input  id="form-color" type="text"
+						placeholder="Username" th:field="*{account}">
+				</div>
+				<label  for="form-color">Login</label>
+				<div >
+					<input  id="form-color" type="text"
+						placeholder="Username" th:field="*{login}">
+				</div>
+				<label  for="form-superPower">Password</label>
+				<div >
+					<input id="form-superPower" type="text"
+						placeholder="Password" th:field="*{pwd}">
+				</div>
+                <label  for="form-superPower">Email</label>
+				<div >
+					<input id="form-superPower" type="text"
+						placeholder="Password" th:field="*{email}">
+				</div>
+                <label  for="form-superPower">Last Name</label>
+				<div >
+					<input id="form-superPower" type="text"
+						placeholder="Password" th:field="*{lastName}">
+				</div>
+                <label  for="form-superPower">Surname</label>
+				<div >
+					<input id="form-superPower" type="text"
+						placeholder="Password" th:field="*{surName}">
+				</div>
+			</div>
+			<div >
+				<input type="submit"  class="uk-button uk-button-default" value="Create" />
+			</div>
+
+		</fieldset>
+	</form>
+
+</body>
+
+</html>
