@@ -7,11 +7,12 @@ import com.cpe.cardgame.repositories.StoreOrderRepository;
 import com.cpe.cardgame.utils.ResponseCode;
 import com.cpe.cardgame.utils.ResponseMessage;
 import org.springframework.data.domain.Pageable;
+import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-
+@Service
 public class PlayPartyService {
 
     private final PlayPartyRepository storeOrderRepository;

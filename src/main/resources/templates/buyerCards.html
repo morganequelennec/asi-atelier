@@ -29,40 +29,8 @@
     </style>
 </head>
 <body>
-<style>
-    .top-bar {
-        background-color: #333;
-        color: #fff;
-        padding: 10px;
-    }
-
-    .top-bar ul {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-    }
-
-    .top-bar li {
-        display: inline;
-    }
-
-    .top-bar li a {
-        color: #fff;
-        text-decoration: none;
-        padding: 10px;
-    }
-
-    .top-bar li a:hover {
-        background-color: #555;
-    }
-
-</style>
-<div class="top-bar">
-    <ul>
-        <li><a href="buy-card">buy cards</a></li>
-        <li><a href="get-my-cards">my cards</a></li>
-        <li><a href="my-profile">my profile</a></li>
-    </ul>
+<div th:replace="fragments/header :: header">
+    <h1> THIS IS A DEFAULT HEADER</h1>
 </div>
 <div class="card" th:each="card : ${cardList}">
     <h3 th:text="${card.name}"></h3>
