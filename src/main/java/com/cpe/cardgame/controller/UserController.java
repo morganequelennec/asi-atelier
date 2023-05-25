@@ -23,6 +23,21 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService userService;
 
+
+    public int GetByUser(HttpServletRequest httprequest)
+    {
+        var data = httprequest.getSession().getAttribute("USER");
+        if(data == null)
+        {
+            return 0;
+        }
+        var id = (Integer)data;
+        if(id == null)
+        {
+            return 0;
+        }
+        return id;
+    }
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -47,6 +62,20 @@ public class UserController {
         var user = this.userService.connect(userform.getUsername(), userform.getPassword());
         httprequest.getSession().setAttribute("USER", user.getResponse().getId());
         return "index";
+    }
+
+    @RequestMapping(value="/my-profile", method = RequestMethod.GET)
+    public String UserProfile(Model model, HttpServletRequest httprequest){
+        var user = GetByUser(httprequest);
+        if(user == 0)
+        {
+            AuthDTO authForm = new AuthDTO();
+            model.addAttribute("connectForm", authForm);
+            return "connectForm";
+        }
+        var user_n = userService.getUser(user);
+        model.addAttribute("userGameData", user_n.getResponse());
+        return "myProfile";
     }
 
     @RequestMapping(value = { "/create-user"}, method = RequestMethod.GET)

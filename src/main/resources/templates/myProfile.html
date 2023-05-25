@@ -1,9 +1,9 @@
-<!DOCTYPE html>
-<html>
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <link rel="stylesheet" type="text/css" href="/static/css/custom.css">
-    <script src="/script/js/cardList.js"></script>
-    <script src="/script/js/custom.js"></script>
+    <meta charset="UTF-8" />
+    <title>Card Information</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
 </head>
 <body>
 <style>
@@ -41,7 +41,13 @@
         <li><a href="my-profile">my profile</a></li>
     </ul>
 </div>
-
-
+<div>
+    <h1>User Game Information</h1>
+    <p><strong>Login:</strong> <span th:text="${userGameData.login}"></span></p>
+    <p><strong>Account:</strong> <span th:text="${userGameData.account}"></span></p>
+    <p><strong>Last Name:</strong> <span th:text="${userGameData.lastName}"></span></p>
+    <p><strong>Surname:</strong> <span th:text="${userGameData.surName}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${userGameData.email}"></span></p>
+</div>
 </body>
 </html>

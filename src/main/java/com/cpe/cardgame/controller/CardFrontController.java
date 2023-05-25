@@ -44,9 +44,31 @@ public class CardFrontController {
         model.addAttribute("cardData", test.getResponse());
         return "viewCard";
     }
+
+    public int GetByUser(HttpServletRequest httprequest)
+    {
+        var data = httprequest.getSession().getAttribute("USER");
+        if(data == null)
+        {
+            return 0;
+        }
+        var id = (Integer)data;
+        if(id == null)
+        {
+            return 0;
+        }
+        return id;
+    }
 //var id = Integer.valueOf((String) httprequest.getSession().getAttribute("USER")); HttpServletRequest httprequest
     @RequestMapping(value="/buy-card", method = RequestMethod.GET)
-    public String buyCardList(Model model){
+    public String buyCardList(Model model, HttpServletRequest httprequest){
+        var user = GetByUser(httprequest);
+        if(user == 0)
+        {
+            AuthDTO authForm = new AuthDTO();
+            model.addAttribute("connectForm", authForm);
+            return "connectForm";
+        }
         var test = this.cardController.getAllCardsBuyable();
         model.addAttribute("cardList", test.getResponse());
         return "buyCard";
