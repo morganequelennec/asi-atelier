@@ -190,6 +190,12 @@ public class CardController {
         return cardService.getAllCardByUserId(user_id);
     }
 
+    @GetMapping("/cards-of-user/available/{user_id}")
+    public ResponseMessage<List<Card>> getAllCardsByUserIdAvailable(int user_id) {
+
+        return cardService.getAllCardByUserIdAvailable(user_id);
+    }
+
     @GetMapping("/cards-buyable")
     public ResponseMessage<List<Card>> getAllCardsBuyable() {
         return cardService.getAllCardCanBuy();

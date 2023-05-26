@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" type="text/css" href="/static/css/custom.css">
     <script src="/script/js/cardList.js"></script>
@@ -41,7 +41,31 @@
         <li><a href="my-profile">my profile</a></li>
     </ul>
 </div>
-
-
+<button onclick="createParty()">Create a Party</button>
+<script>
+    function createParty() {
+        // Send a request to create a party
+        // You can modify this part to match your backend API endpoint
+        // Here's an example of using Fetch API to make a POST request
+        fetch('/api/create-party', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({}) // You can pass any data as the request body if needed
+        })
+            .then(response => response.json())
+            .then(data => {
+                // Handle the response data and display the created party
+                console.log('Created party:', data);
+                // You can modify this part to display the party information in your desired format
+                alert('Party created: ' + data.name);
+            })
+            .catch(error => {
+                console.error('Error creating party:', error);
+                alert('Error creating party. Please try again.');
+            });
+    }
+</script>
 </body>
 </html>

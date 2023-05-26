@@ -22,6 +22,9 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
     @Query(value = "SELECT * FROM cardschem.card WHERE to_sell = TRUE", nativeQuery = true)
     List<Card> findAllByUserIdZero();
 
+    @Query(value = "SELECT * FROM cardschem.card WHERE user_id = :userId AND hp > 0", nativeQuery = true)
+    List<Card> findAllByUserIdCardAvailable(Integer userId);
+
     @Query(value = "SELECT * FROM cardschem.card WHERE user_id = :user_id AND to_sell = FALSE", nativeQuery = true)
     List<Card> findAllByUserId(int user_id);
 }

@@ -17,6 +17,16 @@ public class Card {
     private String smallImgUrl;
     private Double energy;
     private Double hp;
+
+    public Double getOriginalHp() {
+        return OriginalHp;
+    }
+
+    public void setOriginalHp(Double originalHp) {
+        OriginalHp = originalHp;
+    }
+
+    private Double OriginalHp;
     private Double defence;
     private Double attack;
     private Double price;
