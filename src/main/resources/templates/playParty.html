@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <link rel="stylesheet" type="text/css" href="/static/css/custom.css">
+    <script src="/script/js/cardList.js"></script>
+    <script src="/script/js/custom.js"></script>
+</head>
+<body>
+<style>
+
+    .card {
+        width: 300px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .card img {
+        width: 100%;
+        max-height: 200px;
+        object-fit: cover;
+        margin-bottom: 10px;
+    }
+
+    select {
+        width: 100%;
+        padding: 5px;
+        margin-bottom: 10px;
+    }
+
+    button {
+        width: 100%;
+        padding: 10px;
+        background-color: #337ab7;
+        color: #fff;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    #leftSide {
+        float: left;
+        margin-right: 20px;
+    }
+
+    #rightSide {
+        float: left;
+    }
+</style>
+<!-- Left Side -->
+<div id="leftSide">
+    <div class="card">
+        <img src="/path/to/image" alt="Player Image">
+
+        <select id="playerCardDropdownA" th:field="*{playerParty.cardPlayerA}">
+            <option th:each="card : ${playerCardsA}" th:value="${card.id}" th:text="${card.name + '-' +card.hp+'HP'}" th:selected="${card.id == playerParty.cardPlayerA}"></option>
+        </select>
+        <button id="attackButtonA" th:if="${playerParty.currentPlayerId == playerParty.userIdA}" onclick="sendFightRequest(playerPartyId)">Attack</button>
+    </div>
+</div>
+
+<!-- Right Side -->
+<div id="rightSide">
+    <div class="card">
+        <img src="/path/to/image" alt="Player Image">
+        <select id="playerCardDropdownB" th:field="*{playerParty.cardPlayerB}">
+            <option th:each="card : ${playerCardsB}" th:value="${card.id}" th:text="${card.name + '-' + card.hp+'HP'}" th:selected="${card.id == playerParty.cardPlayerB}"></option>
+        </select>
+        <button id="attackButtonB" th:if="${playerParty.currentPlayerId == playerParty.userIdB}" onclick="sendFightRequest(playerPartyId)">Attack</button>
+    </div>
+</div>
+
+<!-- Winner Message -->
+<div th:if="${playerParty.winnerId != null && playerParty.winnerId != 0}">
+    <h2>Winner: <span id="winnerSpan" th:text="${playerParty.winnerId}"></span></h2>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script th:inline="javascript">
+    // JavaScript code for sending fight request and updating data
+    var playerPartyId = [[${playerParty.id}]];
+    var playerParty = [[${playerParty}]];
+    var cardsIdUser = [[${userCards}]];
+    if(cardsIdUser.length>0)
+    {
+        if(playerParty.userIdB == 0)
+        {
+            var user_current = cardsIdUser[0]['userId'];
+            if(user_current != playerParty.userIdA)
+            {
+                $.ajax({
+                    type: "GET",
+                    url: "/view-player-party/second-player/"+playerPartyId,
+                    contentType: "application/json",
+                    success: function(response) {
+                        // Handle the response and update the page
+                        location.reload();
+                    }
+                });
+            }
+
+        }
+    }
+
+    function sendFightRequest(playerId) {
+        var selectedCard;
+        if (playerId === 1) {
+            selectedCard = $("#playerCardDropdownA").val();
+        } else if (playerId === 2) {
+            selectedCard = $("#playerCardDropdownB").val();
+        }
+
+        // Perform AJAX request to /party-player-fight
+        $.ajax({
+            type: "POST",
+            url: "/party-player-fight/"+playerId,
+            contentType: "application/json",
+            success: function(response) {
+                // Handle the response and update the page
+                location.reload();
+            }
+        });
+    }
+
+    // Periodically update party data every 5 seconds
+    setInterval(function() {
+        location.reload();
+    }, 5000);
+</script>
+</body>
+</html>

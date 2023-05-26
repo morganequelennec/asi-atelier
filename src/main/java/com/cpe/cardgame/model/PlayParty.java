@@ -49,10 +49,59 @@ public class PlayParty {
 
     private String partyCode;
 
+    public Boolean getStarted() {
+        return started;
+    }
+
+    public void setStarted(Boolean started) {
+        this.started = started;
+    }
+
+    public Integer getWinnerId() {
+        return winnerId;
+    }
+
+    public void setWinnerId(Integer winnerId) {
+        this.winnerId = winnerId;
+    }
+
+    public Integer getCurrentPlayerId() {
+        return currentPlayerId;
+    }
+
+    public void setCurrentPlayerId(Integer currentPlayerId) {
+        this.currentPlayerId = currentPlayerId;
+    }
+
+    public Integer getCardPlayerA() {
+        return cardPlayerA;
+    }
+
+    public void setCardPlayerA(Integer cardPlayerA) {
+        this.cardPlayerA = cardPlayerA;
+    }
+
+    public Integer getCardPlayerB() {
+        return cardPlayerB;
+    }
+
+    public void setCardPlayerB(Integer cardPlayerB) {
+        this.cardPlayerB = cardPlayerB;
+    }
+
     private Boolean started;
 
     @Column(name = "winner_id")
     private Integer winnerId;
-    
+
+    @Column(name = "curren_player_id")
+    private Integer currentPlayerId;
+
+    @Column(name = "card_player_a")
+    private Integer cardPlayerA;
+
+    @Column(name = "card_player_b")
+    private Integer cardPlayerB;
+
 
 }

@@ -111,6 +111,23 @@ public class CardService {
         return responseMessage;
     }
 
+    public ResponseMessage<List<Card>> getAllCardByUserIdAvailable(int user_id) {
+
+        ResponseMessage<List<Card>> responseMessage = null;
+        try {
+            var data = storeOrderRepository.findAllByUserIdCardAvailable(user_id);
+            responseMessage = new ResponseMessage<>(data);
+            responseMessage.setResponseCode(ResponseCode.SUCCESS);
+        }
+        catch (Exception e)
+        {
+            responseMessage = new ResponseMessage<>(new ArrayList<>());
+            responseMessage.setResponseCode(ResponseCode.ERROR);
+            responseMessage.setMessage("Failed to get all Card that the user own and are available with error :"+e.getMessage());
+        }
+        return responseMessage;
+    }
+
     public ResponseMessage<Card> deleteCard(Card storeOrder) {
         storeOrderRepository.delete(storeOrder);
         var result = storeOrderRepository.findById(storeOrder.getId());
