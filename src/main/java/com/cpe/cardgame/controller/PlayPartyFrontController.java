@@ -34,7 +34,7 @@ public class PlayPartyFrontController {
             model.addAttribute("connectForm", userform);
             return "connectForm";
         }
-        var test = this.playPartyController.getPlayPartyById(id);
+        /*var test = this.playPartyController.getPlayPartyById(id);
         var cards_player_a = this.cardController.getCardsByUserId(test.getResponse().getUserIdA());
         var cards_player_b = this.cardController.getCardsByUserId(test.getResponse().getUserIdB());
         var this_user_cards = this.cardController.getCardsByUserId(user);
@@ -42,7 +42,7 @@ public class PlayPartyFrontController {
         model.addAttribute("playerParty", test.getResponse());
         model.addAttribute("userCards", this_user_cards.getResponse());
         model.addAttribute("playerCardsA", cards_player_a.getResponse());
-        model.addAttribute("playerCardsB", cards_player_b.getResponse());
+        model.addAttribute("playerCardsB", cards_player_b.getResponse());*/
         return "playParty";
     }
 

@@ -6,8 +6,44 @@
     <script src="/script/js/custom.js"></script>
 </head>
 <body>
-<div th:replace="fragments/header :: header">
-    <h1> THIS IS A DEFAULT HEADER</h1>
+<div class="top-bar">
+    <style>
+        .top-bar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .top-bar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-bar li {
+            display: inline;
+        }
+
+        .top-bar li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .top-bar li a:hover {
+            background-color: #555;
+        }
+
+    </style>
+
+    <ul>
+        <li><a href="/buy-card-page">buy cards</a></li>
+        <li><a href="/get-my-cards">my cards</a></li>
+        <li><a href="/my-profile">my profile</a></li>
+        <li><a href="/create-party-of-player">create party</a></li>
+        <li><a href="/connexion">connexion</a></li>
+        <li><a href="/create-user">create account</a></li>
+    </ul>
 </div>
 <button onclick="createParty()">Create a Party</button>
 <script>

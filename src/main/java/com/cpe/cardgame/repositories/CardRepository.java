@@ -15,6 +15,7 @@ public interface CardRepository extends JpaRepository<Card, Integer> {
     // Additional custom methods can be defined here if needed
     Page<Card> findAll(Pageable pageable);
 
+    @Query(value = "SELECT * FROM cardschem.card WHERE user_id = :userId", nativeQuery = true)
     List<Card> findAllByUserId(Integer userId);
 
     Page<Card> findAllByUserId(Integer userId, Pageable pageable);

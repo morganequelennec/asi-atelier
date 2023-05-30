@@ -73,10 +73,10 @@ public class UserController {
             model.addAttribute("connectForm", authForm);
             return "connectForm";
         }
-        var user_n = userService.getUser(user);
-        model.addAttribute("userGameData", user_n.getResponse());
+
         return "myProfile";
     }
+
 
     @RequestMapping(value = { "/create-user"}, method = RequestMethod.GET)
 	public String createUser(Model model) {

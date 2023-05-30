@@ -8,9 +8,14 @@ import com.cpe.cardgame.service.UserService;
 import com.cpe.cardgame.utils.ResponseCode;
 import com.cpe.cardgame.utils.ResponseMessage;
 import com.cpe.cardgame.viewmodel.AuthDTO;
+import com.cpe.cardgame.viewmodel.CardForm;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -184,10 +189,10 @@ public class CardController {
         return cardService.getAllCard(Optional.empty());
     }
 
-    @GetMapping("/cards-of-user/{user_id}")
-    public ResponseMessage<List<Card>> getAllCardsByUserId(int user_id) {
-
-        return cardService.getAllCardByUserId(user_id);
+    @GetMapping("/cards-of-user")
+    public ResponseMessage<List<Card>> getAllCardsByUserId(HttpServletRequest httprequest) {
+        var user = GetByUser(httprequest);
+        return cardService.getAllCardByUserId(user);
     }
 
     @GetMapping("/cards-of-user/available/{user_id}")
@@ -195,14 +200,48 @@ public class CardController {
 
         return cardService.getAllCardByUserIdAvailable(user_id);
     }
-
+    private List<CardForm> convertToCardForms(List<Card> cards) {
+        List<CardForm> cardForms = new ArrayList<>();
+        for (Card card : cards) {
+            CardForm cardForm = card.toCardForm();
+            cardForms.add(cardForm);
+        }
+        return cardForms;
+    }
     @GetMapping("/cards-buyable")
     public ResponseMessage<List<Card>> getAllCardsBuyable() {
-        return cardService.getAllCardCanBuy();
+        ResponseMessage<List<Card>> cardForms = new ResponseMessage<>(
+                /*convertToCardForms(*/cardService.getAllCardCanBuy().getResponse()/*)*/
+        );
+        cardForms.setResponseCode(ResponseCode.SUCCESS);
+        return cardForms;
     }
 
     @GetMapping("/cards/user/{userId}")
     public ResponseMessage<List<Card>> getCardsByUserId(@PathVariable("userId") Integer userId) {
         return cardService.getAllCardTransactionsForUserId(Optional.empty(), userId);
     }
+
+    @GetMapping("/buy-card")
+    public ResponseMessage<List<CardForm>> buyCardList(HttpServletRequest request) {
+        var user = GetByUser(request);
+        if (user == 0) {
+            ResponseMessage<List<CardForm>> listResponseMessage = new ResponseMessage<>(null);
+            listResponseMessage.setResponseCode(ResponseCode.ERROR);
+            listResponseMessage.setMessage("Error your are not logged in");
+            return listResponseMessage;
+        }
+
+        var cardList = this.cardService.getAllCardCanBuy();
+        List<CardForm> cardViewModelList = new ArrayList<>();
+
+        for (Card card : cardList.getResponse()) {
+            cardViewModelList.add(card.toCardForm());
+        }
+        ResponseMessage<List<CardForm>> listResponseMessage = new ResponseMessage<>(cardViewModelList);
+        listResponseMessage.setResponseCode(ResponseCode.SUCCESS);
+        return listResponseMessage;
+    }
+
+
 }

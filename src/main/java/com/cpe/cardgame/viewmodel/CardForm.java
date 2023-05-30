@@ -4,6 +4,16 @@ import com.cpe.cardgame.model.Card;
 import jakarta.persistence.Column;
 
 public class CardForm {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    //TODO METTRE ID ici pour utiliser sur les card a acheter
+    private Integer id;
     private String name;
     private String description;
     private String family;
@@ -125,6 +135,7 @@ public class CardForm {
 
     public Card toCard() {
         Card card = new Card();
+        card.setId(this.getId());
         card.setAffinity(this.getAffinity());
         card.setName(this.getName());
         card.setDescription(this.getDescription());

@@ -8,11 +8,12 @@ import com.cpe.cardgame.service.UserService;
 import com.cpe.cardgame.utils.ResponseCode;
 import com.cpe.cardgame.utils.ResponseMessage;
 import com.cpe.cardgame.viewmodel.AuthDTO;
+import com.cpe.cardgame.viewmodel.dto.PlayPartyViewModel;
 import jakarta.servlet.http.HttpServletRequest;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Optional;
 
 @RestController
 public class PlayPartyController {
@@ -70,6 +71,70 @@ public class PlayPartyController {
         return response;
     }
 
+    @PostMapping("/update-user-card-play-party/{playPartyId}/{cardId}")
+    public ResponseMessage<PlayParty> createPlayParty(@PathVariable("playPartyId") int playPartyId, @PathVariable("cardId") int cardId, HttpServletRequest httprequest) {
+        int user = GetByUser(httprequest);
+        if(user == 0)
+        {
+            ResponseMessage<PlayParty> playPartyResponseMessage = new ResponseMessage<>(null);
+            playPartyResponseMessage.setResponseCode(ResponseCode.FORBIDDEN);
+            playPartyResponseMessage.setMessage("You must be logged in");
+            return playPartyResponseMessage;
+        }
+        var playParty = playPartyService.getPlayParty(playPartyId);
+        var card = cardService.getCard(cardId);
+        if(!playParty.isSuccess()||!card.isSuccess())
+        {
+            ResponseMessage<PlayParty> playPartyResponseMessage = new ResponseMessage<>(null);
+            playPartyResponseMessage.setResponseCode(ResponseCode.ERROR);
+            playPartyResponseMessage.setMessage("Either the card or the playParty dont exist");
+            return playPartyResponseMessage;
+        }
+
+        var playerCards = cardService.getAllCardTransactionsForUserId(Optional.empty(), user);
+        Boolean cardFound = Boolean.FALSE;
+
+        for(var cardP : playerCards.getResponse())
+        {
+            if(cardP.getId()==card.getResponse().getId())
+            {
+                cardFound = Boolean.TRUE;
+            }
+        }
+
+        if(cardFound == Boolean.FALSE)
+        {
+            ResponseMessage<PlayParty> playPartyResponseMessage = new ResponseMessage<>(null);
+            playPartyResponseMessage.setResponseCode(ResponseCode.ERROR);
+            playPartyResponseMessage.setMessage("You are not the card owner");
+            return playPartyResponseMessage;
+        }
+
+        if(playParty.getResponse().getUserIdA() == user)
+        {
+            playParty.getResponse().setCardPlayerA(card.getResponse().getId());
+            this.playPartyService.updatePlayParty(playParty.getResponse());
+            ResponseMessage<PlayParty> playPartyResponseMessage = new ResponseMessage<>(null);
+            playPartyResponseMessage.setResponseCode(ResponseCode.SUCCESS);
+            return playPartyResponseMessage;
+        }
+        else if(playParty.getResponse().getUserIdB() == user)
+        {
+            playParty.getResponse().setCardPlayerB(card.getResponse().getId());
+            this.playPartyService.updatePlayParty(playParty.getResponse());
+            ResponseMessage<PlayParty> playPartyResponseMessage = new ResponseMessage<>(null);
+            playPartyResponseMessage.setResponseCode(ResponseCode.SUCCESS);
+            return playPartyResponseMessage;
+        }
+        else
+        {
+            ResponseMessage<PlayParty> playPartyResponseMessage = new ResponseMessage<>(null);
+            playPartyResponseMessage.setResponseCode(ResponseCode.ERROR);
+            playPartyResponseMessage.setMessage("User dont belong to the party");
+            return playPartyResponseMessage;
+        }
+    }
+
     @GetMapping("/join-play-party/{code}")
     public ResponseMessage<PlayParty> getPlayPartyByCode(@PathVariable("code") String code) {
         return playPartyService.getPlayPartyByCode(code);
@@ -88,6 +153,39 @@ public class PlayPartyController {
             return 0;
         }
         return id;
+    }
+
+    @RequestMapping(value="/view-player-party-data/{id}", method = RequestMethod.GET)
+    public ResponseMessage<PlayPartyViewModel> createUserAction( @PathVariable("id") int id, HttpServletRequest httprequest){
+        int user = GetByUser(httprequest);
+        if(user == 0)
+        {
+            ResponseMessage<PlayPartyViewModel> responseMessage = new ResponseMessage<>(null);
+            responseMessage.setResponseCode(ResponseCode.ERROR);
+            responseMessage.setMessage("You must be logged in !");
+            return responseMessage;
+        }
+
+        var test = this.playPartyService.getPlayParty(id);
+        if(!test.isSuccess())
+        {
+            ResponseMessage<PlayPartyViewModel> responseMessage = new ResponseMessage<>(null);
+            responseMessage.setResponseCode(ResponseCode.ERROR);
+            responseMessage.setMessage("Party not found !");
+            return responseMessage;
+        }
+        var cards_player_a = this.cardService.getAllCardByUserId(test.getResponse().getUserIdA());
+        var cards_player_b = this.cardService.getAllCardByUserId(test.getResponse().getUserIdB());
+        var this_user_cards = this.cardService.getAllCardByUserId(user);
+
+        PlayPartyViewModel playPartyViewModel = new PlayPartyViewModel();
+        playPartyViewModel.setPlayParty(test.getResponse());
+        playPartyViewModel.setCardUserList(this_user_cards.getResponse());
+        playPartyViewModel.setPlayerCardsA(cards_player_a.getResponse());
+        playPartyViewModel.setPlayerCardsB(cards_player_b.getResponse());
+        ResponseMessage<PlayPartyViewModel> responseMessage = new ResponseMessage<>(playPartyViewModel);
+        responseMessage.setResponseCode(ResponseCode.SUCCESS);
+        return responseMessage;
     }
 
 

@@ -1,5 +1,6 @@
 package com.cpe.cardgame.model;
 
+import com.cpe.cardgame.viewmodel.CardForm;
 import jakarta.persistence.*;
 
 @Entity
@@ -147,6 +148,26 @@ public class Card {
 
     public void setUserId(Integer userId) {
         this.userId = userId;
+    }
+
+    public CardForm toCardForm()
+    {
+        CardForm cardForm = new CardForm();
+        cardForm.setId(this.getId());
+        cardForm.setAffinity(this.getAffinity());
+        cardForm.setAttack(this.getAttack());
+        cardForm.setDefence(this.getDefence());
+        cardForm.setEnergy(this.getEnergy());
+        cardForm.setHp(this.getHp());
+        cardForm.setDescription(this.getDescription());
+        cardForm.setName(this.getName());
+        cardForm.setImgUrl(this.getImgUrl());
+        cardForm.setSmallImgUrl(this.getSmallImgUrl());
+        cardForm.setToSell(this.getToSell());
+        cardForm.setUserId(this.getUserId());
+        cardForm.setFamily(this.getFamily());
+        cardForm.setPrice(this.getPrice());
+        return cardForm;
     }
 // Getters and setters
 }

@@ -39,9 +39,9 @@ public class CardFrontController {
 
     @RequestMapping(value="/view-card/{id}", method = RequestMethod.GET)
     public String createUserAction(Model model, @PathVariable("id") int id){
-        var test = this.cardController.getCardById(id);
+        /*var test = this.cardController.getCardById(id);
 
-        model.addAttribute("cardData", test.getResponse());
+        model.addAttribute("cardData", test.getResponse());*/
         return "viewCard";
     }
 
@@ -60,7 +60,7 @@ public class CardFrontController {
         return id;
     }
 //var id = Integer.valueOf((String) httprequest.getSession().getAttribute("USER")); HttpServletRequest httprequest
-    @RequestMapping(value="/buy-card", method = RequestMethod.GET)
+    @RequestMapping(value="/buy-card-page", method = RequestMethod.GET)
     public String buyCardList(Model model, HttpServletRequest httprequest){
         var user = GetByUser(httprequest);
         if(user == 0)
@@ -90,9 +90,9 @@ public class CardFrontController {
             model.addAttribute("connectForm", authForm);
             return "connectForm";
         }
-        var test = this.cardController.getAllCardsByUserId(id);
 
-        model.addAttribute("cardList", test.getResponse());
+        //var test = this.cardController.getAllCardsByUserId(id);
+        //model.addAttribute("cardList", test.getResponse());
         return "buyerCards";
     }
 
