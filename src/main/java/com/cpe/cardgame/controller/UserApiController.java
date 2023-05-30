@@ -4,29 +4,17 @@ import com.cpe.cardgame.model.UserGame;
 import com.cpe.cardgame.service.UserService;
 import com.cpe.cardgame.utils.ResponseMessage;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-public class UserApiController {
+public class UserApiController extends BaseController {
     private final UserService userService;
 
 
-    public int GetByUser(HttpServletRequest httprequest)
-    {
-        var data = httprequest.getSession().getAttribute("USER");
-        if(data == null)
-        {
-            return 0;
-        }
-        var id = (Integer)data;
-        if(id == null)
-        {
-            return 0;
-        }
-        return id;
-    }
+
     public UserApiController(UserService userService) {
         this.userService = userService;
     }

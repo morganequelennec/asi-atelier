@@ -7,6 +7,7 @@ import com.cpe.cardgame.service.UserService;
 import com.cpe.cardgame.viewmodel.AuthDTO;
 import com.cpe.cardgame.viewmodel.CardForm;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -16,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class CardFrontController {
+public class CardFrontController extends BaseController {
 
     private final CardController cardController;
 
@@ -45,20 +46,6 @@ public class CardFrontController {
         return "viewCard";
     }
 
-    public int GetByUser(HttpServletRequest httprequest)
-    {
-        var data = httprequest.getSession().getAttribute("USER");
-        if(data == null)
-        {
-            return 0;
-        }
-        var id = (Integer)data;
-        if(id == null)
-        {
-            return 0;
-        }
-        return id;
-    }
 //var id = Integer.valueOf((String) httprequest.getSession().getAttribute("USER")); HttpServletRequest httprequest
     @RequestMapping(value="/buy-card-page", method = RequestMethod.GET)
     public String buyCardList(Model model, HttpServletRequest httprequest){

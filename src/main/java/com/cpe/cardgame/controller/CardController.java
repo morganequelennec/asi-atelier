@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class CardController {
+public class CardController extends BaseController {
     private final CardService cardService;
     private final UserService userService;
 
@@ -39,20 +39,7 @@ public class CardController {
         return cardService.getCard(id);
     }
 
-    public int GetByUser(HttpServletRequest httprequest)
-    {
-        var data = httprequest.getSession().getAttribute("USER");
-        if(data == null)
-        {
-            return 0;
-        }
-        var id = (Integer)data;
-        if(id == null)
-        {
-            return 0;
-        }
-        return id;
-    }
+
 
     @PostMapping("/buy-card/{cardId}")
     public ResponseMessage<Card> buyCardByUser(
