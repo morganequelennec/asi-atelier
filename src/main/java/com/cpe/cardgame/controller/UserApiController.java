@@ -4,6 +4,7 @@ import com.cpe.cardgame.model.UserGame;
 import com.cpe.cardgame.service.UserService;
 import com.cpe.cardgame.utils.ResponseMessage;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
@@ -36,5 +37,10 @@ public class UserApiController {
         var user = GetByUser(httprequest);
         var user_n = userService.getUser(user);
         return user_n;
+    }
+
+    @PostMapping(value = "/connection",method=RequestMethod.POST)
+    public int connection(){
+
     }
 }
