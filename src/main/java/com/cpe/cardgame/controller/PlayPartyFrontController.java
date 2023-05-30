@@ -5,6 +5,7 @@ import com.cpe.cardgame.service.PlayPartyService;
 import com.cpe.cardgame.viewmodel.AuthDTO;
 import com.cpe.cardgame.viewmodel.CardForm;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -13,7 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
-public class PlayPartyFrontController {
+public class PlayPartyFrontController extends BaseController {
     private final PlayPartyController playPartyController;
     private final PlayPartyService playPartyService;
     private final CardController cardController;
@@ -76,18 +77,5 @@ public class PlayPartyFrontController {
         return "playPartyCreate";
     }
 
-    public int GetByUser(HttpServletRequest httprequest)
-    {
-        var data = httprequest.getSession().getAttribute("USER");
-        if(data == null)
-        {
-            return 0;
-        }
-        var id = (Integer)data;
-        if(id == null)
-        {
-            return 0;
-        }
-        return id;
-    }
+
 }

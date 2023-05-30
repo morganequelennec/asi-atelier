@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class StoreOrderController {
+public class StoreOrderController  extends BaseController{
     private final StoreOrderService storeOrderService;
 
     public StoreOrderController(StoreOrderService storeOrderService) {

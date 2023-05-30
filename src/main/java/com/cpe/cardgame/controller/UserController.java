@@ -5,8 +5,14 @@ import com.cpe.cardgame.service.UserService;
 import com.cpe.cardgame.utils.ResponseMessage;
 import com.cpe.cardgame.viewmodel.AuthDTO;
 
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.ui.Model;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
@@ -19,25 +25,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.security.Key;
+
 @Controller
-public class UserController {
+public class UserController extends BaseController {
     private final UserService userService;
 
 
-    public int GetByUser(HttpServletRequest httprequest)
-    {
-        var data = httprequest.getSession().getAttribute("USER");
-        if(data == null)
-        {
-            return 0;
-        }
-        var id = (Integer)data;
-        if(id == null)
-        {
-            return 0;
-        }
-        return id;
-    }
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -64,6 +59,29 @@ public class UserController {
         return "index";
     }
 
+    @RequestMapping(value = "/connexion", method = RequestMethod.POST)
+    public ResponseEntity<?> connectUser(@ModelAttribute("connectForm") AuthDTO userform, HttpServletRequest httprequest) {
+        var user = this.userService.connect(userform.getUsername(), userform.getPassword());
+
+        if (user.isSuccess()) {
+            // Generate JWT token
+            Key key = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+            String jwt = Jwts.builder()
+                    .setSubject(user.getResponse().getId().toString()) // Assuming user ID is a String
+                    .signWith(key)
+                    .compact();
+
+            httprequest.getSession().setAttribute("JWT_TOKEN", jwt);
+
+            return ResponseEntity.ok().build();
+        } else {
+            // Handle invalid credentials
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+    }
+
+
+
     @RequestMapping(value="/my-profile", method = RequestMethod.GET)
     public String UserProfile(Model model, HttpServletRequest httprequest){
         var user = GetByUser(httprequest);
@@ -84,6 +102,7 @@ public class UserController {
 		model.addAttribute("createForm", userform);
 		return "createForm";
 	}
+
     @RequestMapping(value="/create-user", method = RequestMethod.POST)
     public String createUserAction(Model model,@ModelAttribute("createForm") UserGame userform){
         var user = this.userService.updateUser(userform);

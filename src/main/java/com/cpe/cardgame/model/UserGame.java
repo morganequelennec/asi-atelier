@@ -8,7 +8,6 @@ public class UserGame {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
-
     private String login;
     private String pwd;
     private Double account;

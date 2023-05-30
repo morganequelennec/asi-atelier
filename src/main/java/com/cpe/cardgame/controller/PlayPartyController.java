@@ -10,13 +10,14 @@ import com.cpe.cardgame.utils.ResponseMessage;
 import com.cpe.cardgame.viewmodel.AuthDTO;
 import com.cpe.cardgame.viewmodel.dto.PlayPartyViewModel;
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
 @RestController
-public class PlayPartyController {
+public class PlayPartyController extends BaseController {
     private final PlayPartyService playPartyService;
     private final UserService userService;
     private final CardService cardService;
@@ -140,20 +141,6 @@ public class PlayPartyController {
         return playPartyService.getPlayPartyByCode(code);
     }
 
-    public int GetByUser(HttpServletRequest httprequest)
-    {
-        var data = httprequest.getSession().getAttribute("USER");
-        if(data == null)
-        {
-            return 0;
-        }
-        var id = (Integer)data;
-        if(id == null)
-        {
-            return 0;
-        }
-        return id;
-    }
 
     @RequestMapping(value="/view-player-party-data/{id}", method = RequestMethod.GET)
     public ResponseMessage<PlayPartyViewModel> createUserAction( @PathVariable("id") int id, HttpServletRequest httprequest){
