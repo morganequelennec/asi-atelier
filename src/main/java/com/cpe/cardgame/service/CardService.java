@@ -97,6 +97,13 @@ public class CardService {
     public ResponseMessage<List<Card>> getAllCardByUserId(int user_id) {
 
         ResponseMessage<List<Card>> responseMessage = null;
+        if(user_id==0)
+        {
+            responseMessage = new ResponseMessage<>(new ArrayList<>());
+            responseMessage.setMessage("No cards for user id 0");
+            responseMessage.setResponseCode(ResponseCode.SUCCESS);
+            return responseMessage;
+        }
         try {
             var data = storeOrderRepository.findAllByUserId(user_id);
             responseMessage = new ResponseMessage<>(data);
@@ -114,6 +121,13 @@ public class CardService {
     public ResponseMessage<List<Card>> getAllCardByUserIdAvailable(int user_id) {
 
         ResponseMessage<List<Card>> responseMessage = null;
+        if(user_id==0)
+        {
+            responseMessage = new ResponseMessage<>(new ArrayList<>());
+            responseMessage.setMessage("No cards for user id 0");
+            responseMessage.setResponseCode(ResponseCode.SUCCESS);
+            return responseMessage;
+        }
         try {
             var data = storeOrderRepository.findAllByUserIdCardAvailable(user_id);
             responseMessage = new ResponseMessage<>(data);
@@ -166,6 +180,13 @@ public class CardService {
     public ResponseMessage<List<Card>> getAllCardTransactionsForUserId(Optional<Pageable> filter, Integer userId) {
 
         ResponseMessage<List<Card>> responseMessage = null;
+        if(userId==0)
+        {
+            responseMessage = new ResponseMessage<>(new ArrayList<>());
+            responseMessage.setMessage("No cards for user id 0");
+            responseMessage.setResponseCode(ResponseCode.SUCCESS);
+            return responseMessage;
+        }
         try {
             if (filter.isPresent()) {
                 var data = storeOrderRepository.findAllByUserId(userId, filter.get());
