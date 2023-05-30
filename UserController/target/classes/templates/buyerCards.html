@@ -1,0 +1,135 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Card</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+    <style>
+        /* Define your custom CSS styles here */
+        .card {
+            width: 300px;
+            border: 1px solid #ccc;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        .card .button {
+            display: inline-block;
+            padding: 5px 10px;
+            background-color: #ccc;
+            color: #fff;
+            text-decoration: none;
+            margin-right: 5px;
+        }
+        .card .view-button {
+            background-color: #007bff;
+        }
+        .card .buy-button {
+            background-color: #28a745;
+        }
+    </style>
+</head>
+<body>
+<div class="top-bar">
+    <style>
+        .top-bar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .top-bar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-bar li {
+            display: inline;
+        }
+
+        .top-bar li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .top-bar li a:hover {
+            background-color: #555;
+        }
+
+    </style>
+
+    <ul>
+        <li><a href="/buy-card-page">buy cards</a></li>
+        <li><a href="/get-my-cards">my cards</a></li>
+        <li><a href="/my-profile">my profile</a></li>
+        <li><a href="/create-party-of-player">create party</a></li>
+        <li><a href="/connexion">connexion</a></li>
+        <li><a href="/create-user">create account</a></li>
+    </ul>
+</div>
+<!--<div th:replace="fragments/header :: header">
+    <h1> THIS IS A DEFAULT HEADER</h1>
+</div>
+<div class="card" th:each="card : ${cardList}">
+    <h3 th:text="${card.name}"></h3>
+    <p th:text="${card.description}"></p>
+    <a class="button view-button" th:href="@{/view-card/{cardId}(cardId=${card.id})}">View</a>
+    <form th:action="@{/sell-card/{cardId}(cardId=${card.id})}" method="post">
+        <input type="submit" class="button buy-button" value="Sell" />
+    </form>
+</div>-->
+<div id="cardContainer">
+
+</div>
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        fetch("/cards-of-user", {
+            method: "GET",
+            headers: {
+                "Content-Type": "application/json"
+            },
+        })
+            .then(response => response.json())
+            .then(data => displayCards(data.response));
+    });
+
+    function displayCards(cardList) {
+        var cardContainer = document.getElementById("cardContainer");
+
+        cardList.forEach(function(card) {
+            var cardDiv = document.createElement("div");
+            cardDiv.classList.add("card");
+
+            var cardName = document.createElement("h3");
+            cardName.textContent = card.name;
+            cardDiv.appendChild(cardName);
+
+            var cardDescription = document.createElement("p");
+            cardDescription.textContent = card.description;
+            cardDiv.appendChild(cardDescription);
+
+            var viewButton = document.createElement("a");
+            viewButton.classList.add("button", "view-button");
+            viewButton.textContent = "View";
+            viewButton.href = "/view-card/" + card.id;
+            cardDiv.appendChild(viewButton);
+
+            var sellForm = document.createElement("form");
+            sellForm.method = "post";
+            sellForm.action = "/sell-card/" + card.id;
+
+            var sellButton = document.createElement("input");
+            sellButton.type = "submit";
+            sellButton.classList.add("button", "sell-button");
+            sellButton.value = "Sell";
+
+            sellForm.appendChild(sellButton);
+            cardDiv.appendChild(sellForm);
+
+            cardContainer.appendChild(cardDiv);
+        });
+    }
+</script>
+</body>
+</html>

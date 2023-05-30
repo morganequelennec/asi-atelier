@@ -1,0 +1,98 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Card Information</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/style.css}" />
+</head>
+<body>
+<div class="top-bar">
+    <style>
+        .top-bar {
+            background-color: #333;
+            color: #fff;
+            padding: 10px;
+        }
+
+        .top-bar ul {
+            list-style-type: none;
+            margin: 0;
+            padding: 0;
+        }
+
+        .top-bar li {
+            display: inline;
+        }
+
+        .top-bar li a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px;
+        }
+
+        .top-bar li a:hover {
+            background-color: #555;
+        }
+
+    </style>
+
+    <ul>
+        <li><a href="/buy-card-page">buy cards</a></li>
+        <li><a href="/get-my-cards">my cards</a></li>
+        <li><a href="/my-profile">my profile</a></li>
+        <li><a href="/create-party-of-player">create party</a></li>
+        <li><a href="/connexion">connexion</a></li>
+        <li><a href="/create-user">create account</a></li>
+    </ul>
+</div>
+<!--
+<div th:replace="fragments/header :: header">
+    <h1> THIS IS A DEFAULT HEADER</h1>
+</div>
+<div>
+    <h1>User Game Information</h1>
+    <p><strong>Login:</strong> <span th:text="${userGameData.login}"></span></p>
+    <p><strong>Account:</strong> <span th:text="${userGameData.account}"></span></p>
+    <p><strong>Last Name:</strong> <span th:text="${userGameData.lastName}"></span></p>
+    <p><strong>Surname:</strong> <span th:text="${userGameData.surName}"></span></p>
+    <p><strong>Email:</strong> <span th:text="${userGameData.email}"></span></p>
+</div>
+-->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function() {
+        $.ajax({
+            url: "/get-my-profile",
+            type: "GET",
+            success: function(data) {
+                displayUserGameInfo(data.response);
+            }
+        });
+    });
+
+    function displayUserGameInfo(userGameData) {
+        var userContainer = $("<div></div>");
+
+        var userTitle = $("<h1>User Game Information</h1>");
+        userContainer.append(userTitle);
+
+        var loginInfo = $("<p><strong>Login:</strong> <span></span></p>").text(userGameData.login);
+        userContainer.append(loginInfo);
+
+        var accountInfo = $("<p><strong>Account:</strong> <span></span></p>").text(userGameData.account);
+        userContainer.append(accountInfo);
+
+        var lastNameInfo = $("<p><strong>Last Name:</strong> <span></span></p>").text(userGameData.lastName);
+        userContainer.append(lastNameInfo);
+
+        var surnameInfo = $("<p><strong>Surname:</strong> <span></span></p>").text(userGameData.surName);
+        userContainer.append(surnameInfo);
+
+        var emailInfo = $("<p><strong>Email:</strong> <span></span></p>").text(userGameData.email);
+        userContainer.append(emailInfo);
+
+        $("body").append(userContainer);
+    }
+</script>
+</body>
+</html>
