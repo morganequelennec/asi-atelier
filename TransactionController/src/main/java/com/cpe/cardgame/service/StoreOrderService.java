@@ -1,5 +1,6 @@
 package com.cpe.cardgame.service;
-import fr.model.StoreOrder;
+
+import com.cpe.cardgame.entity.StoreOrder;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
 import org.springframework.data.domain.Pageable;

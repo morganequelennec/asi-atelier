@@ -1,4 +1,4 @@
-package fr.model;
+package com.cpe.cardgame.entity;
 
 import jakarta.persistence.*;
 

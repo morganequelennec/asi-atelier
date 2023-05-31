@@ -1,4 +1,4 @@
-package fr.model;
+package com.cpe.cardgame.entity;
 
 import fr.viewmodel.CardForm;
 import jakarta.persistence.*;

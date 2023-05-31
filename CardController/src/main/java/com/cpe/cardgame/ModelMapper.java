@@ -1,10 +1,10 @@
 package com.cpe.cardgame;
 
+import com.cpe.cardgame.entity.Card;
 import fr.dtoin.CardIn;
 import fr.dtoin.UserIn;
 import fr.dtoout.CardOut;
 import fr.dtoout.UserOut;
-import fr.model.Card;
 import fr.viewmodel.CardForm;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

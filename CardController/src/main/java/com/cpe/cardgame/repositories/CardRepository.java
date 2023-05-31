@@ -1,6 +1,7 @@
 package com.cpe.cardgame.repositories;
 
-import fr.model.Card;
+
+import com.cpe.cardgame.entity.Card;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;

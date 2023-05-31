@@ -1,5 +1,7 @@
 package com.cpe.cardgame;
 
+import com.cpe.cardgame.entity.StoreOrder;
+import com.cpe.cardgame.entity.StoreTransaction;
 import fr.dtoin.CardIn;
 import fr.dtoin.StoreOrderIn;
 import fr.dtoin.StoreTransactionIn;
@@ -8,8 +10,6 @@ import fr.dtoout.CardOut;
 import fr.dtoout.StoreOrderOut;
 import fr.dtoout.StoreTransactionOut;
 import fr.dtoout.UserOut;
-import fr.model.StoreOrder;
-import fr.model.StoreTransaction;
 import fr.viewmodel.CardForm;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;

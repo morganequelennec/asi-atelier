@@ -2,13 +2,12 @@ package com.cpe.cardgame.controller;
 
 
 import com.cpe.cardgame.ModelMapper;
+import com.cpe.cardgame.entity.StoreOrder;
 import com.cpe.cardgame.service.StoreOrderService;
 
 import fr.dtoin.StoreOrderIn;
 import fr.dtoout.StoreOrderOut;
 import fr.dtoout.StoreTransactionOut;
-import fr.model.StoreOrder;
-import fr.model.StoreTransaction;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
 import org.springframework.web.bind.annotation.*;

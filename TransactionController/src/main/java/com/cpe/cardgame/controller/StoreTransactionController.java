@@ -1,10 +1,10 @@
 package com.cpe.cardgame.controller;
 
 import com.cpe.cardgame.ModelMapper;
+import com.cpe.cardgame.entity.StoreTransaction;
 import com.cpe.cardgame.service.StoreTransactionService;
 import fr.dtoin.StoreTransactionIn;
 import fr.dtoout.StoreTransactionOut;
-import fr.model.StoreTransaction;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
 import org.springframework.ui.ModelMap;

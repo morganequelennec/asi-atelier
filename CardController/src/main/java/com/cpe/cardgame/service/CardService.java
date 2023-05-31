@@ -1,7 +1,7 @@
 package com.cpe.cardgame.service;
 
+import com.cpe.cardgame.entity.Card;
 import com.cpe.cardgame.repositories.CardRepository;
-import fr.model.Card;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
 import org.springframework.data.domain.Pageable;

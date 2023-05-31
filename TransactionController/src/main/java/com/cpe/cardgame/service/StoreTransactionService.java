@@ -1,9 +1,9 @@
 package com.cpe.cardgame.service;
 
+import com.cpe.cardgame.entity.StoreTransaction;
 import com.cpe.cardgame.repositories.StoreTransactionRepository;
 
 
-import fr.model.StoreTransaction;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
 import org.springframework.data.domain.Pageable;

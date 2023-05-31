@@ -1,7 +1,7 @@
 package com.cpe.cardgame.repositories;
 
 
-import fr.model.StoreTransaction;
+import com.cpe.cardgame.entity.StoreTransaction;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
