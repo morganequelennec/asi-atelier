@@ -1,7 +1,8 @@
 package fr.api;
 
 import fr.UrlConstant;
-import fr.model.UserGame;
+import fr.dtoin.UserIn;
+import fr.dtoout.UserOut;
 import fr.utils.ResponseMessage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -15,15 +16,15 @@ public class UserApi {
         this.restTemplate = new RestTemplate();
     }
 
-    public ResponseMessage<UserGame> createUser(UserGame userGame) {
+    public ResponseMessage<UserOut> createUser(UserIn userGame) {
         String url = BASE_URL + "/users";
-        HttpEntity<UserGame> request = new HttpEntity<>(userGame);
+        HttpEntity<UserIn> request = new HttpEntity<>(userGame);
 
-        ResponseEntity<ResponseMessage<UserGame>> response = restTemplate.exchange(
+        ResponseEntity<ResponseMessage<UserOut>> response = restTemplate.exchange(
                 url,
                 HttpMethod.POST,
                 request,
-                new ParameterizedTypeReference<ResponseMessage<UserGame>>() {}
+                new ParameterizedTypeReference<ResponseMessage<UserOut>>() {}
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
@@ -34,14 +35,14 @@ public class UserApi {
         }
     }
 
-    public ResponseMessage<UserGame> getUserById(int id) {
+    public ResponseMessage<UserOut> getUserById(int id) {
         String url = BASE_URL + "/user/" + id;
 
-        ResponseEntity<ResponseMessage<UserGame>> response = restTemplate.exchange(
+        ResponseEntity<ResponseMessage<UserOut>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<ResponseMessage<UserGame>>() {}
+                new ParameterizedTypeReference<ResponseMessage<UserOut>>() {}
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
@@ -52,7 +53,7 @@ public class UserApi {
         }
     }
 
-    public void updateUser(UserGame user) {
+    public void updateUser(UserIn user) {
         RestTemplate restTemplate = new RestTemplate();
         String url = BASE_URL + "/user";
 
@@ -61,7 +62,7 @@ public class UserApi {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         // Set the request body
-        HttpEntity<UserGame> requestEntity = new HttpEntity<>(user, headers);
+        HttpEntity<UserIn> requestEntity = new HttpEntity<>(user, headers);
 
         ResponseEntity<Void> response = restTemplate.exchange(
                 url,

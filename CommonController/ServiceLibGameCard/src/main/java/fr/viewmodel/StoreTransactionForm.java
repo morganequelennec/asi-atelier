@@ -1,6 +1,5 @@
 package fr.viewmodel;
 
-import fr.model.StoreTransaction;
 import jakarta.persistence.Column;
 
 import java.time.LocalDateTime;
@@ -47,13 +46,4 @@ public class StoreTransactionForm {
 
     private LocalDateTime timestamp;
 
-    public StoreTransaction toStoreTransaction() {
-        StoreTransaction storeTransaction = new StoreTransaction();
-        storeTransaction.setUserId(this.getUserId());
-        storeTransaction.setCardId(this.getCardId());
-        storeTransaction.setAction(this.getAction());
-        storeTransaction.setTimestamp(this.getTimestamp());
-
-        return storeTransaction;
-    }
 }

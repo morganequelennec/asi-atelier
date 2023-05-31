@@ -1,10 +1,12 @@
 package com.cpe.cardgame.controller;
 
 
+import com.cpe.cardgame.ModelMapper;
 import com.cpe.cardgame.service.CardService;
 
 
 import fr.api.UserApi;
+import fr.mapper.ModelMapperCommon;
 import fr.model.Card;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
@@ -102,14 +104,14 @@ public class CardController {
                 if(r_user.isSuccess())
                 {
                     r_user.getResponse().setAccount(r_user.getResponse().getAccount()+new_card.getPrice());
-                    userApi.updateUser(r_user.getResponse());
+                    userApi.updateUser(ModelMapperCommon.INSTANCE.convert(r_user.getResponse()));
                 }
 
             }
             new_user.setAccount(new_user.getAccount()-new_card.getPrice());
             new_card.setUserId(new_user.getId());
             new_card.setToSell(Boolean.FALSE);
-            userApi.updateUser(new_user);
+            userApi.updateUser(ModelMapperCommon.INSTANCE.convert(new_user));
             var result_user = userApi.getUserById(new_user.getId());
             if(!result_user.isSuccess())
             {

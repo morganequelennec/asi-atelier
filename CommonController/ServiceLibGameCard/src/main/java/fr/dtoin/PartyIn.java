@@ -1,4 +1,4 @@
-package com.cpe.cardgame.model;
+package fr.dtoin;
 
 import jakarta.persistence.*;
 
@@ -16,9 +16,6 @@ public class PartyIn {
         this.cardPlayerB = cardPlayerB;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getUserIdA() {
         return userIdA;

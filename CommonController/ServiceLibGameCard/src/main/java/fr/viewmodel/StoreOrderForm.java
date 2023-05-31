@@ -1,6 +1,5 @@
 package fr.viewmodel;
 
-import fr.model.StoreOrder;
 import jakarta.persistence.Column;
 
 public class StoreOrderForm {
@@ -27,12 +26,5 @@ public class StoreOrderForm {
 
     private Integer cardId;
 
-    public StoreOrder toStoreOrder()
-    {
-        StoreOrder storeOrder = new StoreOrder();
-        storeOrder.setCardId(this.getCardId());
-        storeOrder.setUserId(this.getUserId());
-        return storeOrder;
-    }
 
 }

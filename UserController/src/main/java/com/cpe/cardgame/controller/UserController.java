@@ -1,8 +1,12 @@
 package com.cpe.cardgame.controller;
 
 
+import com.cpe.cardgame.ModelMapper;
 import com.cpe.cardgame.service.UserService;
+import fr.dtoout.UserOut;
+import fr.mapper.ModelMapperCommon;
 import fr.model.UserGame;
+import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
 import fr.viewmodel.AuthDTO;
 import jakarta.servlet.http.HttpServletRequest;
@@ -43,13 +47,45 @@ public class UserController {
     }
 
     @PostMapping("/users")
-    public ResponseMessage<UserGame> createUser(UserGame userGame) {
-        return this.userService.updateUser(userGame);
+    public ResponseMessage<UserOut> createUser(UserGame userGame) {
+        var model = this.userService.updateUser(userGame);
+        if(model.isSuccess())
+        {
+            ResponseMessage<UserOut> responseMessage = new ResponseMessage<>(
+                    ModelMapper.INSTANCE.convertToOut(model.getResponse())
+            );
+            responseMessage.setResponseCode(ResponseCode.SUCCESS);
+            return responseMessage;
+        }
+        else
+        {
+            ResponseMessage<UserOut> responseMessage = new ResponseMessage<>(
+                    null
+            );
+            responseMessage.setResponseCode(ResponseCode.ERROR);
+            return responseMessage;
+        }
     }
 
     @GetMapping("/user/{id}")
-    public ResponseMessage<UserGame> getUserById(@PathVariable("id") int id) {
-         return this.userService.getUser(id);
+    public ResponseMessage<UserOut> getUserById(@PathVariable("id") int id) {
+         var model = this.userService.getUser(id);
+        if(model.isSuccess())
+        {
+            ResponseMessage<UserOut> responseMessage = new ResponseMessage<>(
+                    ModelMapper.INSTANCE.convertToOut(model.getResponse())
+            );
+            responseMessage.setResponseCode(ResponseCode.SUCCESS);
+            return responseMessage;
+        }
+        else
+        {
+            ResponseMessage<UserOut> responseMessage = new ResponseMessage<>(
+                    null
+            );
+            responseMessage.setResponseCode(ResponseCode.ERROR);
+            return responseMessage;
+        }
     }
     @RequestMapping(value = { "/connexion"}, method = RequestMethod.GET)
 	public String connexion(Model model) {

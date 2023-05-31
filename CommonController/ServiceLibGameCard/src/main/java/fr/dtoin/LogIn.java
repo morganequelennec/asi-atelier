@@ -1,4 +1,4 @@
-package fr.viewmodel;
+package fr.dtoin;
 
 public class LogIn {
     private String username;

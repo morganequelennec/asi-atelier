@@ -1,7 +1,8 @@
 package fr.api;
 
 import fr.UrlConstant;
-import fr.model.Card;
+import fr.dtoin.CardIn;
+import fr.dtoout.CardOut;
 import fr.utils.ResponseMessage;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
@@ -13,15 +14,15 @@ import java.util.List;
 public class CardApi {
     private static final String BASE_URL = UrlConstant.getCardUrlPath();
 
-    public ResponseMessage<List<Card>> getAllCardsByUserId(int userId) {
+    public ResponseMessage<List<CardOut>> getAllCardsByUserId(int userId) {
         RestTemplate restTemplate = new RestTemplate();
         String url = BASE_URL + "/cards-of-user/" + userId;
 
-        ResponseEntity<ResponseMessage<List<Card>>> response = restTemplate.exchange(
+        ResponseEntity<ResponseMessage<List<CardOut>>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<ResponseMessage<List<Card>>>() {}
+                new ParameterizedTypeReference<ResponseMessage<List<CardOut>>>() {}
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
@@ -32,15 +33,15 @@ public class CardApi {
         }
     }
 
-    public ResponseMessage<Card> getCard(int cardId) {
+    public ResponseMessage<CardOut> getCard(int cardId) {
         RestTemplate restTemplate = new RestTemplate();
         String url = BASE_URL + "/card/" + cardId;
 
-        ResponseEntity<ResponseMessage<Card>> response = restTemplate.exchange(
+        ResponseEntity<ResponseMessage<CardOut>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<ResponseMessage<Card>>() {}
+                new ParameterizedTypeReference<ResponseMessage<CardOut>>() {}
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
@@ -51,7 +52,7 @@ public class CardApi {
         }
     }
 
-    public ResponseMessage<Card> updateCard(Card card) {
+    public ResponseMessage<CardOut> updateCard(CardIn card) {
         RestTemplate restTemplate = new RestTemplate();
         String url = BASE_URL + "/card";
 
@@ -60,31 +61,31 @@ public class CardApi {
         headers.setContentType(MediaType.APPLICATION_JSON);
 
         // Set the request body
-        HttpEntity<Card> requestEntity = new HttpEntity<>(card, headers);
+        HttpEntity<CardIn> requestEntity = new HttpEntity<>(card, headers);
 
-        ResponseEntity<ResponseMessage<Card>> response = restTemplate.exchange(
+        ResponseEntity<ResponseMessage<CardOut>> response = restTemplate.exchange(
                 url,
                 HttpMethod.POST,
                 requestEntity,
-                new ParameterizedTypeReference<ResponseMessage<Card>>() {}
+                new ParameterizedTypeReference<ResponseMessage<CardOut>>() {}
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {
             return response.getBody();
         } else {
             // Handle error case
-            throw new RuntimeException("Failed to update card: " + card.getId());
+            throw new RuntimeException("Failed to update card: " + card.toString());
         }
     }
-    public ResponseMessage<List<Card>> getAllCardTransactionsForUserId(Integer userId) {
+    public ResponseMessage<List<CardOut>> getAllCardTransactionsForUserId(Integer userId) {
         RestTemplate restTemplate = new RestTemplate();
         String url = BASE_URL + "/cards/user/" + userId;
 
-        ResponseEntity<ResponseMessage<List<Card>>> response = restTemplate.exchange(
+        ResponseEntity<ResponseMessage<List<CardOut>>> response = restTemplate.exchange(
                 url,
                 HttpMethod.GET,
                 null,
-                new ParameterizedTypeReference<ResponseMessage<List<Card>>>() {}
+                new ParameterizedTypeReference<ResponseMessage<List<CardOut>>>() {}
         );
 
         if (response.getStatusCode().is2xxSuccessful()) {

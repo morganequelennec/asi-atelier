@@ -1,8 +1,9 @@
-package fr.dtoin;
+package fr.dtoout;
 
-import fr.model.Card;
 
 public class UserOut {
+
+    private Integer id;
     private String login;
     private String pwd;
     private Double account;
@@ -10,7 +11,8 @@ public class UserOut {
     private String surName;
     private String email;
 
-    public UserOut(String login, String pwd, Double account, String lastName, String surName, String email, String session) {
+    public UserOut(Integer id, String login, String pwd, Double account, String lastName, String surName, String email, String session) {
+        this.id = id;
         this.login = login;
         this.pwd = pwd;
         this.account = account;
@@ -29,14 +31,6 @@ public class UserOut {
     }
 
     private String session;
-
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getLogin() {
         return login;
@@ -84,5 +78,13 @@ public class UserOut {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

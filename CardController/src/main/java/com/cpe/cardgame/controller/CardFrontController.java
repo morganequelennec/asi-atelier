@@ -1,6 +1,7 @@
 package com.cpe.cardgame.controller;
 
 
+import com.cpe.cardgame.ModelMapper;
 import fr.viewmodel.AuthDTO;
 import fr.viewmodel.CardForm;
 import jakarta.servlet.http.HttpServletRequest;
@@ -28,7 +29,7 @@ public class CardFrontController {
     }
     @RequestMapping(value="/create-card", method = RequestMethod.POST)
     public String createUserAction(Model model,@ModelAttribute("cardForm") CardForm cardForm){
-        var test = this.cardController.createCard(cardForm.toCard());
+        var test = this.cardController.createCard(ModelMapper.INSTANCE.convert(cardForm));
 
         model.addAttribute("cardData", cardForm);
         return "viewCard";

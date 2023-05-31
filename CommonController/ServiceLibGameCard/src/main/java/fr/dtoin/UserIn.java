@@ -1,6 +1,5 @@
 package fr.dtoin;
 
-import fr.model.Card;
 
 public class UserIn {
     private String login;
@@ -30,13 +29,6 @@ public class UserIn {
 
     private String session;
 
-    public Integer getId() {
-        return id;
-    }
-
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public String getLogin() {
         return login;

@@ -1,11 +1,12 @@
-package com.cpe.cardgame.model;
+package fr.dtoout;
 
 import jakarta.persistence.*;
 
 public class PartyOut {
 
 
-    public PartyOut(Integer userIdA, Integer userIdB, String partyCode, Boolean started, Integer winnerId, Integer currentPlayerId, Integer cardPlayerA, Integer cardPlayerB) {
+    public PartyOut(Integer id,Integer userIdA, Integer userIdB, String partyCode, Boolean started, Integer winnerId, Integer currentPlayerId, Integer cardPlayerA, Integer cardPlayerB) {
+        this.id = id;
         this.userIdA = userIdA;
         this.userIdB = userIdB;
         this.partyCode = partyCode;
@@ -16,9 +17,6 @@ public class PartyOut {
         this.cardPlayerB = cardPlayerB;
     }
 
-    public void setId(Integer id) {
-        this.id = id;
-    }
 
     public Integer getUserIdA() {
         return userIdA;
@@ -45,6 +43,15 @@ public class PartyOut {
     }
 
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    private Integer id;
     private Integer userIdA;
 
 

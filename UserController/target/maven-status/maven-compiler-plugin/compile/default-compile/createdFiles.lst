@@ -1,0 +1,7 @@
+com\cpe\cardgame\CardgameApplication.class
+com\cpe\cardgame\controller\UserApiController.class
+com\cpe\cardgame\service\UserService.class
+com\cpe\cardgame\repositories\UserRepository.class
+com\cpe\cardgame\controller\UserController.class
+com\cpe\cardgame\ModelMapper.class
+fr\model\UserGame.class

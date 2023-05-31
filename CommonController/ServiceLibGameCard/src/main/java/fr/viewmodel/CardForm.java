@@ -1,6 +1,6 @@
 package fr.viewmodel;
 
-import fr.model.Card;
+
 import jakarta.persistence.Column;
 
 public class CardForm {
@@ -133,23 +133,4 @@ public class CardForm {
         this.userId = userId;
     }
 
-    public Card toCard() {
-        Card card = new Card();
-        card.setId(this.getId());
-        card.setAffinity(this.getAffinity());
-        card.setName(this.getName());
-        card.setDescription(this.getDescription());
-        card.setFamily(this.getFamily());
-        card.setImgUrl(this.getImgUrl());
-        card.setSmallImgUrl(this.getSmallImgUrl());
-        card.setEnergy(this.getEnergy());
-        card.setHp(this.getHp());
-        card.setDefence(this.getDefence());
-        card.setAttack(this.getAttack());
-        card.setPrice(this.getPrice());
-        card.setUserId(this.getUserId());
-        card.setToSell(this.getToSell());
-
-        return card;
-    }
 }
