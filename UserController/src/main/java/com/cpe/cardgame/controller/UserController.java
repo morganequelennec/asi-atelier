@@ -2,10 +2,10 @@ package com.cpe.cardgame.controller;
 
 
 import com.cpe.cardgame.ModelMapper;
+import com.cpe.cardgame.entity.UserGame;
 import com.cpe.cardgame.service.UserService;
 import fr.dtoout.UserOut;
 import fr.mapper.ModelMapperCommon;
-import fr.model.UserGame;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
 import fr.viewmodel.AuthDTO;

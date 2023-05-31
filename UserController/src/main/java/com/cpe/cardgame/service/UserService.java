@@ -1,7 +1,7 @@
 package com.cpe.cardgame.service;
 
+import com.cpe.cardgame.entity.UserGame;
 import com.cpe.cardgame.repositories.UserRepository;
-import fr.model.UserGame;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
 import org.springframework.stereotype.Service;

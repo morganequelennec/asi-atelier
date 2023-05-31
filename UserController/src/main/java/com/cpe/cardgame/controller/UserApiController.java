@@ -1,8 +1,8 @@
 package com.cpe.cardgame.controller;
 
 
+import com.cpe.cardgame.entity.UserGame;
 import com.cpe.cardgame.service.UserService;
-import fr.model.UserGame;
 import fr.utils.ResponseMessage;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.web.bind.annotation.RequestMapping;

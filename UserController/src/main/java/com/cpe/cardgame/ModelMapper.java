@@ -1,8 +1,8 @@
 package com.cpe.cardgame;
 
+import com.cpe.cardgame.entity.UserGame;
 import fr.dtoin.UserIn;
 import fr.dtoout.UserOut;
-import fr.model.UserGame;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
 
