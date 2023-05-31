@@ -3,6 +3,7 @@ package fr.dtoin;
 import fr.model.Card;
 
 public class CardIn {
+    private Integer id;
 
     private String name;
     private String description;
