@@ -1,0 +1,10 @@
+com\cpe\cardgame\model\PlayPartyViewModel.class
+com\cpe\cardgame\CardgameApplication.class
+com\cpe\cardgame\service\PlayPartyService.class
+com\cpe\cardgame\controller\BaseController.class
+com\cpe\cardgame\repositories\PlayPartyRepository.class
+com\cpe\cardgame\controller\PlayPartyController.class
+com\cpe\cardgame\ModelMapper.class
+com\cpe\cardgame\ModelMapperImpl.class
+com\cpe\cardgame\model\PlayParty.class
+com\cpe\cardgame\controller\PlayPartyFrontController.class

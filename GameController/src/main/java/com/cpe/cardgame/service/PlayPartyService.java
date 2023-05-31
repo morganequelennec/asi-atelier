@@ -1,9 +1,14 @@
 package com.cpe.cardgame.service;
 
+import com.cpe.cardgame.ModelMapper;
 import com.cpe.cardgame.model.PlayParty;
+import com.cpe.cardgame.model.PlayPartyViewModel;
 import com.cpe.cardgame.repositories.PlayPartyRepository;
 import fr.api.CardApi;
 import fr.api.UserApi;
+import fr.dtoin.CardIn;
+import fr.dtoout.CardOut;
+import fr.dtoout.PartyOut;
 import fr.mapper.ModelMapperCommon;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
@@ -44,6 +49,125 @@ public class PlayPartyService {
         }
         return responseMessage;
     }
+
+    public ResponseMessage<PartyOut> createPlayParty(int userId) {
+        var playerCards = this.cardRepository.getAllCardsByUserId(userId);
+        PlayParty playParty = new PlayParty();
+        playParty.setCardPlayerB(0);
+        playParty.setWinnerId(0);
+        playParty.setCurrentPlayerId(userId);
+        playParty.setUserIdB(0);
+        playParty.setUserIdA(userId);
+        playParty.setPartyCode("BVBDBVDN");
+        playParty.setStarted(Boolean.TRUE);
+
+        if (playerCards.getResponse().size() > 0) {
+            playParty.setCardPlayerA(playerCards.getResponse().get(0).getId());
+        }
+
+        var response = this.updatePlayParty(playParty);
+        var message = "http://localhost:8080/view-player-party/" + response.getResponse().getId();
+        response.setMessage(message);
+
+        ResponseMessage<PartyOut> responseMessage = new ResponseMessage<>(
+                ModelMapper.INSTANCE.convertToOut(response.getResponse())
+        );
+        responseMessage.setMessage(message);
+        responseMessage.setResponseCode(ResponseCode.SUCCESS);
+        return responseMessage;
+    }
+
+    List<CardOut> convertToCardOutList(List<CardIn> cards) {
+        List<CardOut> cardOutList = new ArrayList<>();
+        for (CardIn card : cards) {
+            CardOut cardOut = ModelMapperCommon.INSTANCE.convert(card);
+            cardOutList.add(cardOut);
+        }
+        return cardOutList;
+    }
+
+    List<CardIn> convertToCardInList(List<CardOut> cards) {
+        List<CardIn> cardOutList = new ArrayList<>();
+        for (CardOut card : cards) {
+            CardIn cardOut = ModelMapperCommon.INSTANCE.convert(card);
+            cardOutList.add(cardOut);
+        }
+        return cardOutList;
+    }
+
+    public ResponseMessage<PlayPartyViewModel> getPlayPartyData(int playPartyId, int userId) {
+        var playParty = this.getPlayParty(playPartyId);
+        if (!playParty.isSuccess()) {
+            ResponseMessage<PlayPartyViewModel> responseMessage = new ResponseMessage<>(null);
+            responseMessage.setResponseCode(ResponseCode.ERROR);
+            responseMessage.setMessage("Party not found!");
+            return responseMessage;
+        }
+
+        var cardsPlayerA = cardRepository.getAllCardsByUserId(playParty.getResponse().getUserIdA());
+        var cardsPlayerB = cardRepository.getAllCardsByUserId(playParty.getResponse().getUserIdB());
+        var thisUserCards = cardRepository.getAllCardsByUserId(userId);
+
+        PlayPartyViewModel playPartyViewModel = new PlayPartyViewModel();
+        playPartyViewModel.setPlayParty(playParty.getResponse());
+        playPartyViewModel.setCardUserList(convertToCardInList(thisUserCards.getResponse()));
+        playPartyViewModel.setPlayerCardsA(convertToCardInList(cardsPlayerA.getResponse()));
+        playPartyViewModel.setPlayerCardsB(convertToCardInList(cardsPlayerB.getResponse()));
+
+        ResponseMessage<PlayPartyViewModel> responseMessage = new ResponseMessage<>(playPartyViewModel);
+        responseMessage.setResponseCode(ResponseCode.SUCCESS);
+        return responseMessage;
+    }
+
+
+
+    public ResponseMessage<PartyOut> updateUserCardPlayParty(int playPartyId, int cardId, int userId) {
+        var playParty = this.getPlayParty(playPartyId);
+        var card = cardRepository.getCard(cardId);
+
+        if (!playParty.isSuccess() || !card.isSuccess()) {
+            ResponseMessage<PartyOut> playPartyResponseMessage = new ResponseMessage<>(null);
+            playPartyResponseMessage.setResponseCode(ResponseCode.ERROR);
+            playPartyResponseMessage.setMessage("Either the card or the playParty doesn't exist");
+            return playPartyResponseMessage;
+        }
+
+        var playerCards = cardRepository.getAllCardTransactionsForUserId(userId);
+        boolean cardFound = false;
+
+        for (var cardP : playerCards.getResponse()) {
+            if (cardP.getId() == card.getResponse().getId()) {
+                cardFound = true;
+                break;
+            }
+        }
+
+        if (!cardFound) {
+            ResponseMessage<PartyOut> playPartyResponseMessage = new ResponseMessage<>(null);
+            playPartyResponseMessage.setResponseCode(ResponseCode.ERROR);
+            playPartyResponseMessage.setMessage("You are not the card owner");
+            return playPartyResponseMessage;
+        }
+
+        if (playParty.getResponse().getUserIdA() == userId) {
+            playParty.getResponse().setCardPlayerA(card.getResponse().getId());
+            this.updatePlayParty(playParty.getResponse());
+        } else if (playParty.getResponse().getUserIdB() == userId) {
+            playParty.getResponse().setCardPlayerB(card.getResponse().getId());
+            this.updatePlayParty(playParty.getResponse());
+        } else {
+            ResponseMessage<PartyOut> playPartyResponseMessage = new ResponseMessage<>(null);
+            playPartyResponseMessage.setResponseCode(ResponseCode.ERROR);
+            playPartyResponseMessage.setMessage("User doesn't belong to the party");
+            return playPartyResponseMessage;
+        }
+
+        ResponseMessage<PartyOut> playPartyResponseMessage = new ResponseMessage<>(null);
+        playPartyResponseMessage.setResponseCode(ResponseCode.SUCCESS);
+        return playPartyResponseMessage;
+    }
+
+
 
     public ResponseMessage<PlayParty> getPlayParty(Integer id) {
         var result =  storeOrderRepository.findById(id);

@@ -1,0 +1,8 @@
+com\cpe\cardgame\controller\CardController.class
+com\cpe\cardgame\CardgameApplication.class
+com\cpe\cardgame\repositories\CardRepository.class
+com\cpe\cardgame\controller\CardFrontController.class
+com\cpe\cardgame\entity\Card.class
+com\cpe\cardgame\ModelMapper.class
+com\cpe\cardgame\service\CardService.class
+com\cpe\cardgame\ModelMapperImpl.class

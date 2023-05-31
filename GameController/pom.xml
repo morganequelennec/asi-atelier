@@ -9,9 +9,9 @@
 		<relativePath/> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.cpe</groupId>
-	<artifactId>cardgame</artifactId>
+	<artifactId>gamecontroller</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>cardgame</name>
+	<name>gamecontroller</name>
 	<description>Card Game</description>
 	<properties>
 		<java.version>17</java.version>
