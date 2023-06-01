@@ -10,13 +10,14 @@ import fr.dtoout.PartyOut;
 import fr.dtoout.StoreOrderOut;
 import fr.dtoout.StoreTransactionOut;
 import fr.dtoout.UserOut;
-import javax.annotation.Generated;
 
+/*
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-31T15:44:04+0200",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
+    date = "2023-05-31T20:30:44+0200",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
+*/
 public class ModelMapperCommonImpl implements ModelMapperCommon {
 
     @Override

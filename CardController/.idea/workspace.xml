@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="e129d8f1-f95e-41a6-ad58-7288daf5a7c3" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/../TransactionController/.idea/jpa-buddy.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../CommonController/ServiceLibGameCard/target/generated-sources/annotations/fr/mapper/ModelMapperCommonImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../CommonController/ServiceLibGameCard/target/generated-sources/annotations/fr/mapper/ModelMapperCommonImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GameController/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../GameController/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GameController/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../GameController/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../GameController/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../GameController/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TransactionController/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TransactionController/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TransactionController/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../TransactionController/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TransactionController/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../TransactionController/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../TransactionController/target/generated-sources/annotations/com/cpe/cardgame/ModelMapperImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/../TransactionController/target/generated-sources/annotations/com/cpe/cardgame/ModelMapperImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserController/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/../UserController/.idea/misc.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserController/target/classes/application.properties" beforeDir="false" afterPath="$PROJECT_DIR$/../UserController/target/classes/application.properties" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/CardgameApplication.class" beforeDir="false" afterPath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/CardgameApplication.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/ModelMapper.class" beforeDir="false" afterPath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/ModelMapper.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/controller/UserApiController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/controller/UserApiController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/controller/UserController.class" beforeDir="false" afterPath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/controller/UserController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/entity/UserGame.class" beforeDir="false" afterPath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/entity/UserGame.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/repositories/UserRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/repositories/UserRepository.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/service/UserService.class" beforeDir="false" afterPath="$PROJECT_DIR$/../UserController/target/classes/com/cpe/cardgame/service/UserService.class" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
+  <component name="JpbToolWindowState">
+    <option name="isToolWindowVisible" value="false" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProjectId" id="2QYJUbvxyxIaITfhADplqy8kjD7" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "RequestMappingsPanelOrder0": "0",
+    "RequestMappingsPanelOrder1": "1",
+    "RequestMappingsPanelWidth0": "75",
+    "RequestMappingsPanelWidth1": "75",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "WebServerToolWindowFactoryState": "false",
+    "last_opened_file_path": "C:/Users/quent/Desktop/ASI/Part II/asi-atelier3/asi-atelier2/GameController",
+    "node.js.detected.package.eslint": "true",
+    "node.js.detected.package.tslint": "true",
+    "node.js.selected.package.eslint": "(autodetect)",
+    "node.js.selected.package.tslint": "(autodetect)",
+    "spring.configuration.checksum": "56f59a3cc788c301b2c66e50f690a65d",
+    "vue.rearranger.settings.migration": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="CardgameApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" nameIsGenerated="true">
+      <module name="CardController" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.cpe.cardgame.CardgameApplication" />
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="e129d8f1-f95e-41a6-ad58-7288daf5a7c3" name="Changes" comment="" />
+      <created>1685524597226</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1685524597226</updated>
+      <workItem from="1685524598473" duration="957000" />
+      <workItem from="1685533719075" duration="2794000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+</project>

@@ -1,0 +1,90 @@
+version: '3'
+services:
+        service-user:
+                build:
+                        context: ./UserController
+                        dockerfile: Dockerfile
+                container_name: service-user
+                networks:
+                        - app-network
+                depends_on:
+                        - db-user
+        service-card:
+                build:
+                        context: ./CardController
+                        dockerfile: Dockerfile
+                container_name: service-card
+                networks:
+                        - app-network
+                depends_on:
+                        - db-card
+        service-game:
+                build:
+                        context: ./GameController
+                        dockerfile: Dockerfile
+                container_name: service-game
+                networks:
+                        - app-network
+                depends_on:
+                        - db-game
+        service-transaction:
+                build:
+                        context: ./TransactionController
+                        dockerfile: Dockerfile
+                container_name: service-transaction
+                networks:
+                        - app-network
+                depends_on:
+                        - db-store
+        nginx-reverse-proxy:
+            image: nginx:latest
+            container_name: reverse_proxy
+            volumes:
+                    - ./nginx.conf:/etc/nginx/nginx.conf
+            ports:
+                    - "80:80"
+            depends_on:
+                    - nginx-front
+            networks:
+                    - app-network
+        nginx-front:
+            image: nginx:latest
+            container_name: front
+            volumes:
+                    - ./front/nginx.conf:/etc/nginx/nginx.conf
+                    - ./front/website:/etc/nginx/html
+            expose:
+                    - "8080"
+            networks:
+                    - app-network
+        db-card:
+                image: postgres
+                restart: always
+                container_name: db-card
+                environment:
+                        POSTGRES_USER: postgres
+                        POSTGRES_PASSWORD: admin
+        db-user:
+                image: postgres
+                restart: always
+                container_name: db-user
+                environment:
+                        POSTGRES_USER: postgres
+                        POSTGRES_PASSWORD: admin
+        db-game:
+                image: postgres
+                restart: always
+                container_name: db-game
+                environment:
+                        POSTGRES_USER: postgres
+                        POSTGRES_PASSWORD: admin
+        db-store:
+                image: postgres
+                restart: always
+                container_name: db-store
+                environment:
+                        POSTGRES_USER: postgres
+                        POSTGRES_PASSWORD: admin
+
+networks:
+    app-network:
