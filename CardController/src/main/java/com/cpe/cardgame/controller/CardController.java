@@ -59,128 +59,32 @@ public class CardController {
     }
 
     @PostMapping("/buy-card/{cardId}")
-    public ResponseMessage<Card> buyCardByUser(
-            @PathVariable("cardId") int cardid,
-            HttpServletRequest httprequest
-            )
-    {
-
+    public ResponseMessage<Card> buyCardByUser(@PathVariable("cardId") int cardId, HttpServletRequest httprequest) {
         int userId = GetByUser(httprequest);
-        var user = userApi.getUserById(userId);
-        var card = cardService.getCard(cardid);
-        if(!card.isSuccess())
-        {
-            return card;
-        }
-        if(!user.isSuccess())
-        {
-            ResponseMessage<Card> responseMessage = new ResponseMessage<>(card.getResponse());
-            responseMessage.setResponseCode(user.getResponseCode());
-            responseMessage.setMessage(user.getMessage());
-            return responseMessage;
-        }
-        if(user.getResponse().getId()==card.getResponse().getUserId())
-        {
-            ResponseMessage<Card> responseMessage = new ResponseMessage<>(card.getResponse());
-            responseMessage.setResponseCode(ResponseCode.FORBIDDEN);
-            responseMessage.setMessage("You already own this item !");
-            return responseMessage;
-        }
-        if(user.getResponse().getAccount()<card.getResponse().getPrice())
-        {
-            ResponseMessage<Card> responseMessage = new ResponseMessage<>(card.getResponse());
-            responseMessage.setResponseCode(ResponseCode.FORBIDDEN);
-            responseMessage.setMessage("You don't have enough balance on your account to buy this item !");
-            return responseMessage;
-        }
-        else
-        {
-            var new_user = user.getResponse();
-            var new_card = card.getResponse();
 
-            if(new_card.getUserId()!=0)
-            {
-                var r_user = userApi.getUserById(new_card.getUserId());
-                if(r_user.isSuccess())
-                {
-                    r_user.getResponse().setAccount(r_user.getResponse().getAccount()+new_card.getPrice());
-                    userApi.updateUser(ModelMapperCommon.INSTANCE.convert(r_user.getResponse()));
-                }
-
-            }
-            new_user.setAccount(new_user.getAccount()-new_card.getPrice());
-            new_card.setUserId(new_user.getId());
-            new_card.setToSell(Boolean.FALSE);
-            userApi.updateUser(ModelMapperCommon.INSTANCE.convert(new_user));
-            var result_user = userApi.getUserById(new_user.getId());
-            if(!result_user.isSuccess())
-            {
-                ResponseMessage<Card> responseMessage = new ResponseMessage<>(new_card);
-                responseMessage.setResponseCode(result_user.getResponseCode());
-                responseMessage.setMessage(result_user.getMessage());
-                return responseMessage;
-            }
-            var result_card = cardService.updateCard(new_card);
-            if(!result_card.isSuccess())
-            {
-                return result_card;
-            }
-
-            ResponseMessage<Card> responseMessage = new ResponseMessage<>(result_card.getResponse());
-            responseMessage.setResponseCode(ResponseCode.SUCCESS);
-            return responseMessage;
-        }
+        return cardService.buyCardByUser(cardId, userId);
     }
 
     @PostMapping("/sell-card/{cardId}")
-    public ResponseMessage<Card> sellCardByUser(
-            @PathVariable("cardId") int cardid,
-            HttpServletRequest httprequest
-    )
-    {
+    public ResponseMessage<Card> sellCardByUser(@PathVariable("cardId") int cardId, HttpServletRequest httprequest) {
         var data = httprequest.getSession().getAttribute("USER");
-        if(data == null)
-        {
+        if (data == null) {
             ResponseMessage<Card> responseMessage = new ResponseMessage<>(null);
             responseMessage.setResponseCode(ResponseCode.ERROR);
-            responseMessage.setMessage("Not authentificated");
-            return responseMessage;
-        }
-        var id = (Integer)data;
-        if(id == null)
-        {
-            ResponseMessage<Card> responseMessage = new ResponseMessage<>(null);
-            responseMessage.setResponseCode(ResponseCode.ERROR);
-            responseMessage.setMessage("Not authentificated");
-            return responseMessage;
-        }
-        int userId = id;
-        var user = userApi.getUserById(userId);
-        var card = cardService.getCard(cardid);
-        if(!card.isSuccess())
-        {
-            return card;
-        }
-        if(!user.isSuccess())
-        {
-            ResponseMessage<Card> responseMessage = new ResponseMessage<>(card.getResponse());
-            responseMessage.setResponseCode(user.getResponseCode());
-            responseMessage.setMessage(user.getMessage());
-            return responseMessage;
-        }
-        if(user.getResponse().getId()==card.getResponse().getUserId())
-        {
-            card.getResponse().setToSell(Boolean.TRUE);
-            return cardService.updateCard(card.getResponse());
-        }
-        else
-        {
-            ResponseMessage<Card> responseMessage = new ResponseMessage<>(card.getResponse());
-            responseMessage.setResponseCode(ResponseCode.FORBIDDEN);
-            responseMessage.setMessage("You are not the card owner");
+            responseMessage.setMessage("Not authenticated");
             return responseMessage;
         }
 
+        Integer id = (Integer) data;
+        if (id == null) {
+            ResponseMessage<Card> responseMessage = new ResponseMessage<>(null);
+            responseMessage.setResponseCode(ResponseCode.ERROR);
+            responseMessage.setMessage("Not authenticated");
+            return responseMessage;
+        }
+
+        int userId = id;
+        return cardService.sellCardByUser(cardId, userId);
     }
 
     @DeleteMapping("/card/{id}")
@@ -227,24 +131,16 @@ public class CardController {
     }
 
     @GetMapping("/buy-card")
-    public ResponseMessage<List<CardForm>> buyCardList(HttpServletRequest request) {
-        var user = GetByUser(request);
+    public ResponseMessage<List<CardForm>> getBuyCardList(HttpServletRequest request) {
+        int user = GetByUser(request);
         if (user == 0) {
-            ResponseMessage<List<CardForm>> listResponseMessage = new ResponseMessage<>(null);
-            listResponseMessage.setResponseCode(ResponseCode.ERROR);
-            listResponseMessage.setMessage("Error your are not logged in");
-            return listResponseMessage;
+            ResponseMessage<List<CardForm>> responseMessage = new ResponseMessage<>(null);
+            responseMessage.setResponseCode(ResponseCode.ERROR);
+            responseMessage.setMessage("Error: You are not logged in");
+            return responseMessage;
         }
 
-        var cardList = this.cardService.getAllCardCanBuy();
-        List<CardForm> cardViewModelList = new ArrayList<>();
-
-        for (Card card : cardList.getResponse()) {
-            cardViewModelList.add(card.toCardForm());
-        }
-        ResponseMessage<List<CardForm>> listResponseMessage = new ResponseMessage<>(cardViewModelList);
-        listResponseMessage.setResponseCode(ResponseCode.SUCCESS);
-        return listResponseMessage;
+        return cardService.getBuyCardList();
     }
 
 

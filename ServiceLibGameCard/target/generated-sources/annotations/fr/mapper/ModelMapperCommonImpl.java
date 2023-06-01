@@ -14,8 +14,8 @@ import fr.dtoout.UserOut;
 /*
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-05-31T20:30:44+0200",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.5 (Amazon.com Inc.)"
+    date = "2023-06-01T14:23:26+0200",
+    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 */
 public class ModelMapperCommonImpl implements ModelMapperCommon {

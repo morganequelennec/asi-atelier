@@ -2,8 +2,12 @@ package com.cpe.cardgame.service;
 
 import com.cpe.cardgame.entity.Card;
 import com.cpe.cardgame.repositories.CardRepository;
+import fr.api.CardApi;
+import fr.api.UserApi;
+import fr.mapper.ModelMapperCommon;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
+import fr.viewmodel.CardForm;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -14,6 +18,8 @@ import java.util.Optional;
 @Service
 public class CardService {
     private final CardRepository storeOrderRepository;
+    private final CardApi cardApi = new CardApi();
+    private final UserApi userApi = new UserApi();
 
     public CardService(CardRepository storeOrderRepository) {
         this.storeOrderRepository = storeOrderRepository;
@@ -35,6 +41,70 @@ public class CardService {
         return responseMessage;
     }
 
+    public ResponseMessage<Card> buyCardByUser(int cardId, int userId) {
+        var user = userApi.getUserById(userId);
+        var card = this.getCard(cardId);
+
+        if (!card.isSuccess()) {
+            return card;
+        }
+
+        if (!user.isSuccess()) {
+            ResponseMessage<Card> responseMessage = new ResponseMessage<>(card.getResponse());
+            responseMessage.setResponseCode(user.getResponseCode());
+            responseMessage.setMessage(user.getMessage());
+            return responseMessage;
+        }
+
+        if (user.getResponse().getId() == card.getResponse().getUserId()) {
+            ResponseMessage<Card> responseMessage = new ResponseMessage<>(card.getResponse());
+            responseMessage.setResponseCode(ResponseCode.FORBIDDEN);
+            responseMessage.setMessage("You already own this item!");
+            return responseMessage;
+        }
+
+        if (user.getResponse().getAccount() < card.getResponse().getPrice()) {
+            ResponseMessage<Card> responseMessage = new ResponseMessage<>(card.getResponse());
+            responseMessage.setResponseCode(ResponseCode.FORBIDDEN);
+            responseMessage.setMessage("You don't have enough balance on your account to buy this item!");
+            return responseMessage;
+        } else {
+            var newUser = user.getResponse();
+            var newCard = card.getResponse();
+
+            if (newCard.getUserId() != 0) {
+                var rUser = userApi.getUserById(newCard.getUserId());
+                if (rUser.isSuccess()) {
+                    rUser.getResponse().setAccount(rUser.getResponse().getAccount() + newCard.getPrice());
+                    userApi.updateUser(ModelMapperCommon.INSTANCE.convert(rUser.getResponse()));
+                }
+            }
+
+            newUser.setAccount(newUser.getAccount() - newCard.getPrice());
+            newCard.setUserId(newUser.getId());
+            newCard.setToSell(Boolean.FALSE);
+            userApi.updateUser(ModelMapperCommon.INSTANCE.convert(newUser));
+
+            var resultUser = userApi.getUserById(newUser.getId());
+            if (!resultUser.isSuccess()) {
+                ResponseMessage<Card> responseMessage = new ResponseMessage<>(newCard);
+                responseMessage.setResponseCode(resultUser.getResponseCode());
+                responseMessage.setMessage(resultUser.getMessage());
+                return responseMessage;
+            }
+
+            var resultCard = this.updateCard(newCard);
+            if (!resultCard.isSuccess()) {
+                return resultCard;
+            }
+
+            ResponseMessage<Card> responseMessage = new ResponseMessage<>(resultCard.getResponse());
+            responseMessage.setResponseCode(ResponseCode.SUCCESS);
+            return responseMessage;
+        }
+    }
+
+
     public ResponseMessage<Card> getCard(Integer id) {
         var result =  storeOrderRepository.findById(id);
         ResponseMessage<Card> responseMessage = new ResponseMessage<>(result.get());
@@ -49,6 +119,33 @@ public class CardService {
         }
         return responseMessage;
     }
+
+    public ResponseMessage<Card> sellCardByUser(int cardId, int userId) {
+        var user = userApi.getUserById(userId);
+        var card = this.getCard(cardId);
+
+        if (!card.isSuccess()) {
+            return card;
+        }
+
+        if (!user.isSuccess()) {
+            ResponseMessage<Card> responseMessage = new ResponseMessage<>(card.getResponse());
+            responseMessage.setResponseCode(user.getResponseCode());
+            responseMessage.setMessage(user.getMessage());
+            return responseMessage;
+        }
+
+        if (user.getResponse().getId() == card.getResponse().getUserId()) {
+            card.getResponse().setToSell(Boolean.TRUE);
+            return this.updateCard(card.getResponse());
+        } else {
+            ResponseMessage<Card> responseMessage = new ResponseMessage<>(card.getResponse());
+            responseMessage.setResponseCode(ResponseCode.FORBIDDEN);
+            responseMessage.setMessage("You are not the card owner");
+            return responseMessage;
+        }
+    }
+
 
     public ResponseMessage<List<Card>> getAllCard(Optional<Pageable> filter) {
 
@@ -75,6 +172,20 @@ public class CardService {
         }
         return responseMessage;
     }
+
+    public ResponseMessage<List<CardForm>> getBuyCardList() {
+        var cardList = this.getAllCardCanBuy();
+        List<CardForm> cardFormList = new ArrayList<>();
+
+        for (Card card : cardList.getResponse()) {
+            cardFormList.add(card.toCardForm());
+        }
+
+        ResponseMessage<List<CardForm>> responseMessage = new ResponseMessage<>(cardFormList);
+        responseMessage.setResponseCode(ResponseCode.SUCCESS);
+        return responseMessage;
+    }
+
 
 
     public ResponseMessage<List<Card>> getAllCardCanBuy() {

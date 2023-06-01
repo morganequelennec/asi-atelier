@@ -1,9 +1,9 @@
-C:\Users\quent\Desktop\ASI\Part II\asi-atelier3\asi-atelier2\GameController\src\main\java\com\cpe\cardgame\model\PlayPartyViewModel.java
-C:\Users\quent\Desktop\ASI\Part II\asi-atelier3\asi-atelier2\GameController\src\main\java\com\cpe\cardgame\controller\PlayPartyFrontController.java
-C:\Users\quent\Desktop\ASI\Part II\asi-atelier3\asi-atelier2\GameController\src\main\java\com\cpe\cardgame\controller\BaseController.java
-C:\Users\quent\Desktop\ASI\Part II\asi-atelier3\asi-atelier2\GameController\src\main\java\com\cpe\cardgame\model\PlayParty.java
-C:\Users\quent\Desktop\ASI\Part II\asi-atelier3\asi-atelier2\GameController\src\main\java\com\cpe\cardgame\repositories\PlayPartyRepository.java
-C:\Users\quent\Desktop\ASI\Part II\asi-atelier3\asi-atelier2\GameController\src\main\java\com\cpe\cardgame\service\PlayPartyService.java
-C:\Users\quent\Desktop\ASI\Part II\asi-atelier3\asi-atelier2\GameController\src\main\java\com\cpe\cardgame\controller\PlayPartyController.java
-C:\Users\quent\Desktop\ASI\Part II\asi-atelier3\asi-atelier2\GameController\src\main\java\com\cpe\cardgame\ModelMapper.java
-C:\Users\quent\Desktop\ASI\Part II\asi-atelier3\asi-atelier2\GameController\src\main\java\com\cpe\cardgame\CardgameApplication.java
+C:\Users\Axel\projjava\Microservice\GameController\src\main\java\com\cpe\cardgame\model\PlayPartyViewModel.java
+C:\Users\Axel\projjava\Microservice\GameController\src\main\java\com\cpe\cardgame\service\PlayPartyService.java
+C:\Users\Axel\projjava\Microservice\GameController\src\main\java\com\cpe\cardgame\controller\BaseController.java
+C:\Users\Axel\projjava\Microservice\GameController\src\main\java\com\cpe\cardgame\controller\PlayPartyFrontController.java
+C:\Users\Axel\projjava\Microservice\GameController\src\main\java\com\cpe\cardgame\controller\PlayPartyController.java
+C:\Users\Axel\projjava\Microservice\GameController\src\main\java\com\cpe\cardgame\repositories\PlayPartyRepository.java
+C:\Users\Axel\projjava\Microservice\GameController\src\main\java\com\cpe\cardgame\ModelMapper.java
+C:\Users\Axel\projjava\Microservice\GameController\src\main\java\com\cpe\cardgame\CardgameApplication.java
+C:\Users\Axel\projjava\Microservice\GameController\src\main\java\com\cpe\cardgame\model\PlayParty.java

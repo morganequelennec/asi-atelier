@@ -44,6 +44,10 @@ services:
             ports:
                     - "80:80"
             depends_on:
+                    - service-user
+                    - service-card
+                    - service-game
+                    - service-transaction
                     - nginx-front
             networks:
                     - app-network
@@ -64,6 +68,10 @@ services:
                 environment:
                         POSTGRES_USER: postgres
                         POSTGRES_PASSWORD: admin
+                volumes:
+                - ./card.sql:/docker-entrypoint-initdb.d/card.sql # Mount SQL script for db-card
+                command: postgres -d postgres -U postgres -f /docker-entrypoint-initdb.d/card.sql # Execute SQL script
+
         db-user:
                 image: postgres
                 restart: always
@@ -71,6 +79,9 @@ services:
                 environment:
                         POSTGRES_USER: postgres
                         POSTGRES_PASSWORD: admin
+                volumes:
+                - ./user.sql:/docker-entrypoint-initdb.d/user.sql # Mount SQL script for db-card
+                command: postgres -d postgres -U postgres -f /docker-entrypoint-initdb.d/user.sql # Execute SQL script
         db-game:
                 image: postgres
                 restart: always
@@ -78,6 +89,9 @@ services:
                 environment:
                         POSTGRES_USER: postgres
                         POSTGRES_PASSWORD: admin
+                volumes:
+                - ./game.sql:/docker-entrypoint-initdb.d/game.sql # Mount SQL script for db-card
+                command: postgres -d postgres -U postgres -f /docker-entrypoint-initdb.d/game.sql # Execute SQL script
         db-store:
                 image: postgres
                 restart: always
@@ -85,6 +99,9 @@ services:
                 environment:
                         POSTGRES_USER: postgres
                         POSTGRES_PASSWORD: admin
+                volumes:
+                - ./store.sql:/docker-entrypoint-initdb.d/store.sql # Mount SQL script for db-card
+                command: postgres -d postgres -U postgres -f /docker-entrypoint-initdb.d/store.sql # Execute SQL script
 
 networks:
     app-network:

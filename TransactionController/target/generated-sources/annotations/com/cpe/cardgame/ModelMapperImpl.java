@@ -10,8 +10,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-01T13:44:10+0200",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.5 (Amazon.com Inc.)"
+    date = "2023-06-01T14:23:10+0200",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 public class ModelMapperImpl implements ModelMapper {
 
