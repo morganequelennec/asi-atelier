@@ -251,8 +251,8 @@
 
 
     function extractIdFromUrl() {
-        const url = document.location.pathname; // Get the current URL path
-        const id = url.split('/').pop(); // Extract the last segment of the URL path
+         // Get the current URL path
+        const id = sessionStorage.getItem("id") // Extract the last segment of the URL path
 
         return id;
     }

@@ -95,13 +95,29 @@
                 .attr("href", getHost()+getCardService()+"/view-card/" + card.id);
             cardDiv.append(viewButton);
 
-            var buyForm = $("<form method='get'></form>")
-                .attr("action", getHost()+getTransactionService()+"/storeOrdersCard/MakeBuy/" + card.id);
+            var buyForm = $("<form method='get' id='form"+card.id+"'></form>")
             var buyButton = $("<input type='submit' class='button buy-button' value='Buy' />");
             buyForm.append(buyButton);
             cardDiv.append(buyForm);
 
             cardContainer.append(cardDiv);
+            $('#form'+card.id).submit(function(event) {
+                event.preventDefault();
+                $.ajax({
+                    url: getHost()+getTransactionService()+"/storeOrdersCard/MakeBuy/" + card.id,
+                    type: 'GET',
+                    dataType: 'json', // Set the expected response data type as text
+                    success: function(response) {
+                        if (response.success) {
+                            window.location.replace("http://localhost/front/buyerCards.html");
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle error cases here
+                        console.log('Error:', error);
+                    }
+                });
+            });
         });
     }
 

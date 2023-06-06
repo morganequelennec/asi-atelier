@@ -14,8 +14,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-06T18:22:17+0200",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
+    date = "2023-06-06T22:08:19+0200",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 public class ModelMapperImpl implements ModelMapper {
 
@@ -197,6 +197,19 @@ public class ModelMapperImpl implements ModelMapper {
 
         CardIn cardIn = new CardIn();
 
+        cardIn.setName( user.getName() );
+        cardIn.setDescription( user.getDescription() );
+        cardIn.setFamily( user.getFamily() );
+        cardIn.setAffinity( user.getAffinity() );
+        cardIn.setImgUrl( user.getImgUrl() );
+        cardIn.setSmallImgUrl( user.getSmallImgUrl() );
+        cardIn.setEnergy( user.getEnergy() );
+        cardIn.setHp( user.getHp() );
+        cardIn.setPrice( user.getPrice() );
+        cardIn.setOriginalHp( user.getOriginalHp() );
+        cardIn.setUserId( user.getUserId() );
+        cardIn.setToSell( user.getToSell() );
+
         return cardIn;
     }
 
@@ -207,6 +220,19 @@ public class ModelMapperImpl implements ModelMapper {
         }
 
         CardOut cardOut = new CardOut();
+
+        cardOut.setName( user.getName() );
+        cardOut.setDescription( user.getDescription() );
+        cardOut.setFamily( user.getFamily() );
+        cardOut.setAffinity( user.getAffinity() );
+        cardOut.setImgUrl( user.getImgUrl() );
+        cardOut.setSmallImgUrl( user.getSmallImgUrl() );
+        cardOut.setEnergy( user.getEnergy() );
+        cardOut.setHp( user.getHp() );
+        cardOut.setToSell( user.getToSell() );
+        cardOut.setUserId( user.getUserId() );
+        cardOut.setPrice( user.getPrice() );
+        cardOut.setOriginalHp( user.getOriginalHp() );
 
         return cardOut;
     }

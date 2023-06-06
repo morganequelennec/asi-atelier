@@ -8,8 +8,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-06T18:22:09+0200",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
+    date = "2023-06-06T22:45:27+0200",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 public class ModelMapperImpl implements ModelMapper {
 
@@ -20,6 +20,19 @@ public class ModelMapperImpl implements ModelMapper {
         }
 
         Card card = new Card();
+
+        card.setOriginalHp( user.getOriginalHp() );
+        card.setToSell( user.getToSell() );
+        card.setName( user.getName() );
+        card.setDescription( user.getDescription() );
+        card.setFamily( user.getFamily() );
+        card.setAffinity( user.getAffinity() );
+        card.setImgUrl( user.getImgUrl() );
+        card.setSmallImgUrl( user.getSmallImgUrl() );
+        card.setEnergy( user.getEnergy() );
+        card.setHp( user.getHp() );
+        card.setPrice( user.getPrice() );
+        card.setUserId( user.getUserId() );
 
         return card;
     }
@@ -109,6 +122,19 @@ public class ModelMapperImpl implements ModelMapper {
         }
 
         CardIn cardIn = new CardIn();
+
+        cardIn.setName( user.getName() );
+        cardIn.setDescription( user.getDescription() );
+        cardIn.setFamily( user.getFamily() );
+        cardIn.setAffinity( user.getAffinity() );
+        cardIn.setImgUrl( user.getImgUrl() );
+        cardIn.setSmallImgUrl( user.getSmallImgUrl() );
+        cardIn.setEnergy( user.getEnergy() );
+        cardIn.setHp( user.getHp() );
+        cardIn.setPrice( user.getPrice() );
+        cardIn.setOriginalHp( user.getOriginalHp() );
+        cardIn.setUserId( user.getUserId() );
+        cardIn.setToSell( user.getToSell() );
 
         return cardIn;
     }

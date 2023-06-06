@@ -49,7 +49,7 @@
         // Send a request to create a party
         // You can modify this part to match your backend API endpoint
         // Here's an example of using Fetch API to make a POST request
-        fetch(getHost()+getGameService()+'/api/create-party', {
+        fetch(getHost()+getGameService()+'/create-play-party', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -62,6 +62,8 @@
                 console.log('Created party:', data);
                 // You can modify this part to display the party information in your desired format
                 alert('Party created: ' + data.name);
+                sessionStorage.setItem("id",data.message);
+                window.location.replace("http://localhost/front/playParty.html");
             })
             .catch(error => {
                 console.error('Error creating party:', error);

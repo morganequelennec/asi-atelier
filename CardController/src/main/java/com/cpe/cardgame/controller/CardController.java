@@ -114,6 +114,11 @@ public class CardController extends BaseController {
         return cardService.getAllCardByUserId(user);
     }
 
+    @GetMapping("/cards-of-user/{id}")
+    public ResponseMessage<List<Card>> getAllCardsByUserId(@PathVariable("id") int id) {
+        return cardService.getAllCardByUserId(id);
+    }
+
     @GetMapping("/cards-of-user/available/{user_id}")
     public ResponseMessage<List<Card>> getAllCardsByUserIdAvailable(int user_id) {
 

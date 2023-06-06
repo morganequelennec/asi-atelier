@@ -66,7 +66,7 @@ public class PlayPartyService {
         }
 
         var response = this.updatePlayParty(playParty);
-        var message = "http://localhost:8080/view-player-party/" + response.getResponse().getId();
+        var message = response.getResponse().getId()+"";
         response.setMessage(message);
 
         ResponseMessage<PartyOut> responseMessage = new ResponseMessage<>(

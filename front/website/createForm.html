@@ -141,20 +141,7 @@
                 type: 'POST',
                 data: formData,
                 success: function(response) {
-                    //if (response.code === 200) {
-                        // Assuming the JWT token is returned as 'jwt_token' in the response
-                        var jwtToken = response["response"]["session"].trim();
-
-                        // Set the JWT_TOKEN in the browser's local storage
-                        localStorage.setItem('JWT_TOKEN', jwtToken);
-                        // Set the JWT_TOKEN as a cookie with an expiration date
-                        var expirationDate = new Date();
-                        expirationDate.setDate(expirationDate.getDate() + 365); // Example: Set the expiration date to 7 days from now
-                        document.cookie = 'JWT_TOKEN=' + jwtToken + '; expires=' + expirationDate.toUTCString() + '; path=/';
-
-                        // Redirect or perform any other actions as needed
-                        // Example: window.location.href = '/dashboard';
-                    //}
+                    window.location.replace("http://localhost/front/connectForm.html");
                 },
                 error: function(xhr, status, error) {
                     // Handle error cases here
