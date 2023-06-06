@@ -2,15 +2,13 @@ package com.cpe.cardgame;
 
 import com.cpe.cardgame.entity.Card;
 import fr.dtoin.CardIn;
-import fr.dtoin.UserIn;
 import fr.dtoout.CardOut;
-import fr.dtoout.UserOut;
 import fr.viewmodel.CardForm;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-01T14:22:23+0200",
+    date = "2023-06-06T18:22:09+0200",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 public class ModelMapperImpl implements ModelMapper {
@@ -34,6 +32,8 @@ public class ModelMapperImpl implements ModelMapper {
 
         Card card = new Card();
 
+        card.setOriginalHp( user.getOriginalHp() );
+        card.setToSell( user.getToSell() );
         card.setId( user.getId() );
         card.setName( user.getName() );
         card.setDescription( user.getDescription() );
@@ -44,6 +44,8 @@ public class ModelMapperImpl implements ModelMapper {
         card.setEnergy( user.getEnergy() );
         card.setHp( user.getHp() );
         card.setAttack( user.getAttack() );
+        card.setPrice( user.getPrice() );
+        card.setUserId( user.getUserId() );
 
         return card;
     }
@@ -101,44 +103,39 @@ public class ModelMapperImpl implements ModelMapper {
     }
 
     @Override
-    public UserIn convertToIn(Card user) {
+    public CardIn convertToIn(Card user) {
         if ( user == null ) {
             return null;
         }
 
-        String login = null;
-        String pwd = null;
-        Double account = null;
-        String lastName = null;
-        String surName = null;
-        String email = null;
-        String session = null;
+        CardIn cardIn = new CardIn();
 
-        UserIn userIn = new UserIn( login, pwd, account, lastName, surName, email, session );
-
-        return userIn;
+        return cardIn;
     }
 
     @Override
-    public UserOut convertToOut(Card user) {
+    public CardOut convertToOut(Card user) {
         if ( user == null ) {
             return null;
         }
 
-        Integer id = null;
+        CardOut cardOut = new CardOut();
 
-        id = user.getId();
+        cardOut.setId( user.getId() );
+        cardOut.setName( user.getName() );
+        cardOut.setDescription( user.getDescription() );
+        cardOut.setFamily( user.getFamily() );
+        cardOut.setAffinity( user.getAffinity() );
+        cardOut.setImgUrl( user.getImgUrl() );
+        cardOut.setSmallImgUrl( user.getSmallImgUrl() );
+        cardOut.setEnergy( user.getEnergy() );
+        cardOut.setHp( user.getHp() );
+        cardOut.setToSell( user.getToSell() );
+        cardOut.setUserId( user.getUserId() );
+        cardOut.setPrice( user.getPrice() );
+        cardOut.setOriginalHp( user.getOriginalHp() );
+        cardOut.setAttack( user.getAttack() );
 
-        String login = null;
-        String pwd = null;
-        Double account = null;
-        String lastName = null;
-        String surName = null;
-        String email = null;
-        String session = null;
-
-        UserOut userOut = new UserOut( id, login, pwd, account, lastName, surName, email, session );
-
-        return userOut;
+        return cardOut;
     }
 }

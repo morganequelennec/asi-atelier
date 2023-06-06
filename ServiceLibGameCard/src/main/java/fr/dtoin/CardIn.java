@@ -12,4 +12,9 @@ public class CardIn {
     private String smallImgUrl;
     private Double energy;
     private Double hp;
+    private Double price;
+    private Double OriginalHp;
+    private Integer userId;
+
+    private Boolean toSell;
 }

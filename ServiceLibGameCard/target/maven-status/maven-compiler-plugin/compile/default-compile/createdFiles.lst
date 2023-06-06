@@ -19,6 +19,7 @@ fr\mapper\ModelMapperCommon.class
 fr\viewmodel\AuthDTO.class
 fr\dtoin\UserIn.class
 fr\api\UserApi$2.class
+fr\api\CardApi$5.class
 fr\viewmodel\dto\CardViewModel.class
 fr\api\CardApi$1.class
 fr\viewmodel\StoreTransactionForm.class

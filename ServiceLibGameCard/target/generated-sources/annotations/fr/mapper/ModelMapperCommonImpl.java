@@ -14,7 +14,7 @@ import fr.dtoout.UserOut;
 /*
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-01T14:23:26+0200",
+    date = "2023-06-06T18:22:04+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 */
@@ -77,27 +77,16 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
             return null;
         }
 
-        Integer userIdA = null;
-        Integer userIdB = null;
-        String partyCode = null;
-        Boolean started = null;
-        Integer winnerId = null;
-        Integer currentPlayerId = null;
-        Integer cardPlayerA = null;
-        Integer cardPlayerB = null;
+        PartyOut partyOut = new PartyOut();
 
-        userIdA = user.getUserIdA();
-        userIdB = user.getUserIdB();
-        partyCode = user.getPartyCode();
-        started = user.getStarted();
-        winnerId = user.getWinnerId();
-        currentPlayerId = user.getCurrentPlayerId();
-        cardPlayerA = user.getCardPlayerA();
-        cardPlayerB = user.getCardPlayerB();
-
-        Integer id = null;
-
-        PartyOut partyOut = new PartyOut( id, userIdA, userIdB, partyCode, started, winnerId, currentPlayerId, cardPlayerA, cardPlayerB );
+        partyOut.setUserIdA( user.getUserIdA() );
+        partyOut.setUserIdB( user.getUserIdB() );
+        partyOut.setPartyCode( user.getPartyCode() );
+        partyOut.setStarted( user.getStarted() );
+        partyOut.setWinnerId( user.getWinnerId() );
+        partyOut.setCurrentPlayerId( user.getCurrentPlayerId() );
+        partyOut.setCardPlayerA( user.getCardPlayerA() );
+        partyOut.setCardPlayerB( user.getCardPlayerB() );
 
         return partyOut;
     }
@@ -135,25 +124,15 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
             return null;
         }
 
-        String session = null;
-        String login = null;
-        String pwd = null;
-        Double account = null;
-        String lastName = null;
-        String surName = null;
-        String email = null;
+        UserOut userOut = new UserOut();
 
-        session = user.getSession();
-        login = user.getLogin();
-        pwd = user.getPwd();
-        account = user.getAccount();
-        lastName = user.getLastName();
-        surName = user.getSurName();
-        email = user.getEmail();
-
-        Integer id = null;
-
-        UserOut userOut = new UserOut( id, login, pwd, account, lastName, surName, email, session );
+        userOut.setSession( user.getSession() );
+        userOut.setLogin( user.getLogin() );
+        userOut.setPwd( user.getPwd() );
+        userOut.setAccount( user.getAccount() );
+        userOut.setLastName( user.getLastName() );
+        userOut.setSurName( user.getSurName() );
+        userOut.setEmail( user.getEmail() );
 
         return userOut;
     }

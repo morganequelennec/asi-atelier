@@ -6,9 +6,13 @@ import com.cpe.cardgame.entity.UserGame;
 import com.cpe.cardgame.service.UserService;
 import fr.dtoout.UserOut;
 import fr.mapper.ModelMapperCommon;
+import fr.utils.KeyHost;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
 import fr.viewmodel.AuthDTO;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.SignatureAlgorithm;
+import io.jsonwebtoken.security.Keys;
 import jakarta.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
@@ -23,25 +27,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-@Controller
-public class UserController {
+@RestController
+public class UserController extends BaseController {
     private final UserService userService;
 
 
-    public int GetByUser(HttpServletRequest httprequest)
-    {
-        var data = httprequest.getSession().getAttribute("USER");
-        if(data == null)
-        {
-            return 0;
-        }
-        var id = (Integer)data;
-        if(id == null)
-        {
-            return 0;
-        }
-        return id;
-    }
+
     public UserController(UserService userService) {
         this.userService = userService;
     }
@@ -87,45 +78,72 @@ public class UserController {
             return responseMessage;
         }
     }
-    @RequestMapping(value = { "/connexion"}, method = RequestMethod.GET)
+    @GetMapping(value = { "/connexion"})
 	public String connexion(Model model) {
 		AuthDTO userform = new AuthDTO();
 		model.addAttribute("connectForm", userform);
 		return "connectForm";
 	}
-    @RequestMapping(value="/connexion", method = RequestMethod.POST)
-    public String connecUser(@ModelAttribute("connectForm") AuthDTO userform, HttpServletRequest httprequest){
+    @PostMapping(value="/connexion")
+    public ResponseMessage<UserOut> connecUser(@ModelAttribute("connectForm") AuthDTO userform, HttpServletRequest httprequest){
         var user = this.userService.connect(userform.getUsername(), userform.getPassword());
-        httprequest.getSession().setAttribute("USER", user.getResponse().getId());
-        return "index";
+        if(user.isSuccess())
+        {
+            if(KeyHost.DataKey ==null)
+            {
+                KeyHost.DataKey = Keys.secretKeyFor(SignatureAlgorithm.HS256);
+            }
+            String jwt = Jwts.builder()
+                    .setSubject(user.getResponse().getId().toString()) // Assuming user ID is a String
+                    .signWith(KeyHost.DataKey)
+                    .compact();
+            user.getResponse().setSession(jwt);
+            return user.toType(ModelMapper.INSTANCE.convertToOut(user.getResponse()));
+        }
+        else
+        {
+            return user.toNull();
+        }
     }
 
-    @RequestMapping(value="/my-profile", method = RequestMethod.GET)
-    public String UserProfile(Model model, HttpServletRequest httprequest){
+    @GetMapping(value="/my-profile")
+    public ResponseMessage<UserOut> UserProfile( HttpServletRequest httprequest){
         var user = GetByUser(httprequest);
         if(user == 0)
         {
-            AuthDTO authForm = new AuthDTO();
-            model.addAttribute("connectForm", authForm);
-            return "connectForm";
+            ResponseMessage<UserOut> responseMessage = new ResponseMessage<UserOut>(null);
+            responseMessage.setResponseCode(ResponseCode.FORBIDDEN);
+            responseMessage.setMessage("You must log in");
+            return responseMessage;
         }
-
-        return "myProfile";
+        var profile = this.userService.getUser(user);
+        if(profile.isSuccess())
+        {
+            return profile.toType(ModelMapper.INSTANCE.convertToOut(profile.getResponse()));
+        }
+        else
+        {
+            return profile.toNull();
+        }
     }
 
 
-    @RequestMapping(value = { "/create-user"}, method = RequestMethod.GET)
-	public String createUser(Model model) {
+    @GetMapping(value = { "/create-user"})
+	public String createUser() {
 		UserGame userform = new UserGame();
-		model.addAttribute("createForm", userform);
 		return "createForm";
 	}
-    @RequestMapping(value="/create-user", method = RequestMethod.POST)
-    public String createUserAction(Model model,@ModelAttribute("createForm") UserGame userform){
+    @PostMapping(value="/create-user")
+    public ResponseMessage<UserOut> createUserAction(@ModelAttribute("createForm") UserGame userform){
         var user = this.userService.updateUser(userform);
-        AuthDTO authForm = new AuthDTO();
-		model.addAttribute("connectForm", authForm);
-        return "connectForm";
+        if(user.isSuccess())
+        {
+            return user.toType(ModelMapper.INSTANCE.convertToOut(user.getResponse()));
+        }
+        else
+        {
+            return user.toNull();
+        }
     }
 
 }

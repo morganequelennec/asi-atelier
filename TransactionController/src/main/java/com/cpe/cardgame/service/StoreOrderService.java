@@ -53,6 +53,21 @@ public class StoreOrderService {
         return responseMessage;
     }
 
+    public ResponseMessage<StoreOrder> getStoreOrderByTuple(Integer userId, Integer cardId) {
+        var result =  storeOrderRepository.getStoreOrderByUserAndCardId(userId, cardId);
+        ResponseMessage<StoreOrder> responseMessage = new ResponseMessage<>(result);
+        if(result==null)
+        {
+            responseMessage.setResponseCode(ResponseCode.NOT_FOUND);
+            responseMessage.setMessage("StoreOrder not found");
+        }
+        else
+        {
+            responseMessage.setResponseCode(ResponseCode.SUCCESS);
+        }
+        return responseMessage;
+    }
+
     public ResponseMessage<List<StoreOrder>> getAllStoreOrder(Optional<Pageable> filter) {
 
         ResponseMessage<List<StoreOrder>> responseMessage = null;

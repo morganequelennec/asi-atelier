@@ -30,4 +30,9 @@ public interface ModelMapper {
     StoreOrder convert(StoreOrderIn user);
     StoreOrder convert(StoreOrderOut user);
 
+    UserOut convert(UserIn user);
+    UserIn convert(UserOut user);
+    CardIn convert(CardOut user);
+    CardOut convert(CardIn user);
+
 }

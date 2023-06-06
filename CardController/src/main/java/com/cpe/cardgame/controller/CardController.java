@@ -24,13 +24,37 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-public class CardController {
+public class CardController extends BaseController {
     private final CardService cardService;
     private final UserApi userApi;
 
     public CardController(CardService cardService) {
         this.cardService = cardService;
         this.userApi = new UserApi();
+
+        /*if(this.cardService.getAllCard(Optional.empty()).getResponse().size()<1)
+        {*/
+            for(int c = 0;c<10;c++)
+            {
+                Card card = new Card();
+                card.setAffinity("fire");
+                card.setAttack(12.0+c);
+                card.setDefence(10.0+c);
+                card.setFamily("fire family");
+                card.setDescription("Super description of "+c);
+                card.setEnergy(c+0.0);
+                card.setHp(c*10.0);
+                card.setName("Pokemon "+c);
+                card.setToSell(Boolean.TRUE);
+                card.setOriginalHp(c*10.0);
+                card.setPrice(20.0);
+                card.setSmallImgUrl("");
+                card.setUserId(0);
+                this.cardService.updateCard(card);
+            }
+
+
+        //}
     }
 
     @PostMapping("/card")
@@ -43,20 +67,7 @@ public class CardController {
         return cardService.getCard(id);
     }
 
-    public int GetByUser(HttpServletRequest httprequest)
-    {
-        var data = httprequest.getSession().getAttribute("USER");
-        if(data == null)
-        {
-            return 0;
-        }
-        var id = (Integer)data;
-        if(id == null)
-        {
-            return 0;
-        }
-        return id;
-    }
+
 
     @PostMapping("/buy-card/{cardId}")
     public ResponseMessage<Card> buyCardByUser(@PathVariable("cardId") int cardId, HttpServletRequest httprequest) {

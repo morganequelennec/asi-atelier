@@ -2,15 +2,19 @@ package com.cpe.cardgame;
 
 import com.cpe.cardgame.entity.StoreOrder;
 import com.cpe.cardgame.entity.StoreTransaction;
+import fr.dtoin.CardIn;
 import fr.dtoin.StoreOrderIn;
 import fr.dtoin.StoreTransactionIn;
+import fr.dtoin.UserIn;
+import fr.dtoout.CardOut;
 import fr.dtoout.StoreOrderOut;
 import fr.dtoout.StoreTransactionOut;
+import fr.dtoout.UserOut;
 import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-01T14:23:10+0200",
+    date = "2023-06-06T18:22:17+0200",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 public class ModelMapperImpl implements ModelMapper {
@@ -137,5 +141,73 @@ public class ModelMapperImpl implements ModelMapper {
         storeOrder.setCardId( user.getCardId() );
 
         return storeOrder;
+    }
+
+    @Override
+    public UserOut convert(UserIn user) {
+        if ( user == null ) {
+            return null;
+        }
+
+        UserOut userOut = new UserOut();
+
+        userOut.setSession( user.getSession() );
+        userOut.setLogin( user.getLogin() );
+        userOut.setPwd( user.getPwd() );
+        userOut.setAccount( user.getAccount() );
+        userOut.setLastName( user.getLastName() );
+        userOut.setSurName( user.getSurName() );
+        userOut.setEmail( user.getEmail() );
+
+        return userOut;
+    }
+
+    @Override
+    public UserIn convert(UserOut user) {
+        if ( user == null ) {
+            return null;
+        }
+
+        String session = null;
+        String login = null;
+        String pwd = null;
+        Double account = null;
+        String lastName = null;
+        String surName = null;
+        String email = null;
+
+        session = user.getSession();
+        login = user.getLogin();
+        pwd = user.getPwd();
+        account = user.getAccount();
+        lastName = user.getLastName();
+        surName = user.getSurName();
+        email = user.getEmail();
+
+        UserIn userIn = new UserIn( login, pwd, account, lastName, surName, email, session );
+
+        return userIn;
+    }
+
+    @Override
+    public CardIn convert(CardOut user) {
+        if ( user == null ) {
+            return null;
+        }
+
+        CardIn cardIn = new CardIn();
+
+        return cardIn;
+    }
+
+    @Override
+    public CardOut convert(CardIn user) {
+        if ( user == null ) {
+            return null;
+        }
+
+        CardOut cardOut = new CardOut();
+
+        return cardOut;
     }
 }

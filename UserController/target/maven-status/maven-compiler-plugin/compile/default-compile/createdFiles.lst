@@ -1,6 +1,7 @@
 com\cpe\cardgame\CardgameApplication.class
 com\cpe\cardgame\controller\UserApiController.class
 com\cpe\cardgame\service\UserService.class
+com\cpe\cardgame\controller\BaseController.class
 com\cpe\cardgame\repositories\UserRepository.class
 com\cpe\cardgame\entity\UserGame.class
 com\cpe\cardgame\controller\UserController.class

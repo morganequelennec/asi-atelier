@@ -17,22 +17,22 @@
         <div class="container">
             <ul class="navbar-nav ms-auto">
                 <li class="nav-item">
-                    <a class="nav-link" href="buyCard.html">Buy cards</a>
+                    <a class="nav-link" href="/front/buyCard.html">Buy cards</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="buyerCards.html">My cards</a>
+                    <a class="nav-link" href="/front/buyerCards.html">My cards</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="myProfile.html">My profile</a>
+                    <a class="nav-link" href="/front/myProfile.html">My profile</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="playPartyCreate.html">Create room</a>
+                    <a class="nav-link" href="/front/playPartyCreate.html">Create room</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="connectForm.html">Connexion</a>
+                    <a class="nav-link" href="/front/connectForm.html">Connexion</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="createForm.html">Create account</a>
+                    <a class="nav-link" href="/front/createForm.html">Create account</a>
                 </li>
             </ul>
         </div>
@@ -141,9 +141,9 @@
                 type: 'POST',
                 data: formData,
                 success: function(response) {
-                    if (response.code === 200) {
+                    //if (response.code === 200) {
                         // Assuming the JWT token is returned as 'jwt_token' in the response
-                        var jwtToken = response.jwt_token;
+                        var jwtToken = response["response"]["session"].trim();
 
                         // Set the JWT_TOKEN in the browser's local storage
                         localStorage.setItem('JWT_TOKEN', jwtToken);
@@ -154,7 +154,7 @@
 
                         // Redirect or perform any other actions as needed
                         // Example: window.location.href = '/dashboard';
-                    }
+                    //}
                 },
                 error: function(xhr, status, error) {
                     // Handle error cases here

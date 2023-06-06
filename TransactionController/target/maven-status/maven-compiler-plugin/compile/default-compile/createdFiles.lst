@@ -1,5 +1,6 @@
 com\cpe\cardgame\entity\StoreOrder.class
 com\cpe\cardgame\CardgameApplication.class
+com\cpe\cardgame\controller\BaseController.class
 com\cpe\cardgame\controller\StoreTransactionController.class
 com\cpe\cardgame\repositories\StoreOrderRepository.class
 com\cpe\cardgame\repositories\StoreTransactionRepository.class

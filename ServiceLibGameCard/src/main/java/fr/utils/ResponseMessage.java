@@ -9,6 +9,9 @@ public class ResponseMessage<T> {
         this.response = response;
     }
 
+    public ResponseMessage() {
+    }
+
     public T getResponse() {
         return response;
     }
@@ -36,5 +39,19 @@ public class ResponseMessage<T> {
     public boolean isSuccess()
     {
         return getResponseCode() == ResponseCode.SUCCESS;
+    }
+
+    public <M> ResponseMessage<M> toType(M data) {
+        ResponseMessage<M> responseMessage = new ResponseMessage<>(data);
+        responseMessage.setMessage(this.getMessage());
+        responseMessage.setResponseCode(this.getResponseCode());
+        return responseMessage;
+    }
+
+    public <M> ResponseMessage<M> toNull() {
+        ResponseMessage<M> responseMessage = new ResponseMessage<>(null);
+        responseMessage.setMessage(this.getMessage());
+        responseMessage.setResponseCode(this.getResponseCode());
+        return responseMessage;
     }
 }

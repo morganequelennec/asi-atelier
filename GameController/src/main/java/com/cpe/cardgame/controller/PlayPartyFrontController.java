@@ -4,17 +4,15 @@ package com.cpe.cardgame.controller;
 import com.cpe.cardgame.ModelMapper;
 import com.cpe.cardgame.service.PlayPartyService;
 import fr.api.CardApi;
+import fr.dtoout.PartyOut;
 import fr.viewmodel.AuthDTO;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
+@RestController
 public class PlayPartyFrontController extends BaseController {
     private final PlayPartyController playPartyController;
     private final PlayPartyService playPartyService;
@@ -27,13 +25,11 @@ public class PlayPartyFrontController extends BaseController {
     }
 
 
-    @RequestMapping(value="/view-player-party/{id}", method = RequestMethod.GET)
-    public String createUserAction(Model model, @PathVariable("id") int id, HttpServletRequest httprequest){
+    @GetMapping(value="/view-player-party/{id}")
+    public String createUserAction(@PathVariable("id") int id, HttpServletRequest httprequest){
         int user = GetByUser(httprequest);
         if(user == 0)
         {
-            AuthDTO userform = new AuthDTO();
-            model.addAttribute("connectForm", userform);
             return "connectForm";
         }
         /*var test = this.playPartyController.getPlayPartyById(id);
@@ -48,14 +44,12 @@ public class PlayPartyFrontController extends BaseController {
         return "playParty";
     }
 
-    @RequestMapping(value="/view-player-party/second-player/{id}", method = RequestMethod.GET)
-    public String SetSecondPlayer(Model model, @PathVariable("id") int id, HttpServletRequest httprequest){
+    @GetMapping(value="/view-player-party/second-player/{id}")
+    public String SetSecondPlayer(@PathVariable("id") int id, HttpServletRequest httprequest){
         int user = GetByUser(httprequest);
         if(user == 0)
         {
-            AuthDTO userform = new AuthDTO();
-            model.addAttribute("connectForm", userform);
-            return "connectForm";
+            return "mustConnect";
         }
         var test = this.playPartyController.getPlayPartyById(id);
         test.getResponse().setUserIdB(user);
@@ -63,19 +57,6 @@ public class PlayPartyFrontController extends BaseController {
         test.getResponse().setCardPlayerB(cards.getResponse().get(0).getId());
         this.playPartyService.updatePlayParty(ModelMapper.INSTANCE.convert(test.getResponse()));
         return "";
-    }
-
-    @RequestMapping(value="/create-party-of-player", method = RequestMethod.GET)
-    public String CreatePartyOfPlayer(Model model, HttpServletRequest httprequest){
-        int user = GetByUser(httprequest);
-        if(user == 0)
-        {
-            AuthDTO userform = new AuthDTO();
-            model.addAttribute("connectForm", userform);
-            return "connectForm";
-        }
-
-        return "playPartyCreate";
     }
 
 

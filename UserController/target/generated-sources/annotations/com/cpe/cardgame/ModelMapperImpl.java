@@ -7,7 +7,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-01T14:22:48+0200",
+    date = "2023-06-06T18:22:21+0200",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 public class ModelMapperImpl implements ModelMapper {
@@ -84,25 +84,16 @@ public class ModelMapperImpl implements ModelMapper {
             return null;
         }
 
-        String session = null;
-        String login = null;
-        String pwd = null;
-        Double account = null;
-        String lastName = null;
-        String surName = null;
-        String email = null;
-        Integer id = null;
+        UserOut userOut = new UserOut();
 
-        session = user.getSession();
-        login = user.getLogin();
-        pwd = user.getPwd();
-        account = user.getAccount();
-        lastName = user.getLastName();
-        surName = user.getSurName();
-        email = user.getEmail();
-        id = user.getId();
-
-        UserOut userOut = new UserOut( id, login, pwd, account, lastName, surName, email, session );
+        userOut.setSession( user.getSession() );
+        userOut.setLogin( user.getLogin() );
+        userOut.setPwd( user.getPwd() );
+        userOut.setAccount( user.getAccount() );
+        userOut.setLastName( user.getLastName() );
+        userOut.setSurName( user.getSurName() );
+        userOut.setEmail( user.getEmail() );
+        userOut.setId( user.getId() );
 
         return userOut;
     }

@@ -22,6 +22,11 @@ public class UserOut {
         this.session = session;
     }
 
+    public UserOut()
+    {
+
+    }
+
     public String getSession() {
         return session;
     }

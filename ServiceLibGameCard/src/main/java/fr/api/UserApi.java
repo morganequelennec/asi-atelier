@@ -8,8 +8,11 @@ import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.*;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class UserApi {
-    private static final String BASE_URL = UrlConstant.getUserUrlPath();
+    private static final String BASE_URL = "http://service-user";
     private RestTemplate restTemplate;
 
     public UserApi() {
@@ -53,9 +56,37 @@ public class UserApi {
         }
     }
 
+    public ResponseMessage<String> isAuth(String token) {
+        String url = BASE_URL + "/is-auth";
+
+        // Create request headers
+        HttpHeaders headers = new HttpHeaders();
+        headers.setContentType(MediaType.APPLICATION_JSON);
+
+        // Create request body
+        Map<String, String> requestBody = new HashMap<>();
+        requestBody.put("token", token);
+
+        HttpEntity<Map<String, String>> requestEntity = new HttpEntity<>(requestBody, headers);
+
+        ResponseEntity<ResponseMessage<String>> response = restTemplate.exchange(
+                url,
+                HttpMethod.POST,
+                requestEntity,
+                new ParameterizedTypeReference<ResponseMessage<String>>() {}
+        );
+
+        if (response.getStatusCode().is2xxSuccessful()) {
+            return response.getBody();
+        } else {
+            // Handle error case
+            throw new RuntimeException("Failed to authenticate with token: " + token);
+        }
+    }
+
     public void updateUser(UserIn user) {
         RestTemplate restTemplate = new RestTemplate();
-        String url = BASE_URL + "/user";
+        String url = BASE_URL + "/users";
 
         // Set the request headers
         HttpHeaders headers = new HttpHeaders();

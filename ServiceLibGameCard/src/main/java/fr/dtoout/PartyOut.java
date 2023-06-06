@@ -17,6 +17,11 @@ public class PartyOut {
         this.cardPlayerB = cardPlayerB;
     }
 
+    public PartyOut()
+    {
+
+    }
+
 
     public Integer getUserIdA() {
         return userIdA;

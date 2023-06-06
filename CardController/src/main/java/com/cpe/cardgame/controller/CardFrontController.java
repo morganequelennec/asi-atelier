@@ -2,19 +2,23 @@ package com.cpe.cardgame.controller;
 
 
 import com.cpe.cardgame.ModelMapper;
+import com.cpe.cardgame.entity.Card;
+import fr.dtoout.CardOut;
+import fr.utils.ResponseCode;
+import fr.utils.ResponseMessage;
 import fr.viewmodel.AuthDTO;
 import fr.viewmodel.CardForm;
 import jakarta.servlet.http.HttpServletRequest;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
-@Controller
-public class CardFrontController {
+import java.util.ArrayList;
+import java.util.List;
+
+@RestController
+public class CardFrontController extends BaseController {
 
     private final CardController cardController;
 
@@ -27,20 +31,28 @@ public class CardFrontController {
         model.addAttribute("cardForm", card);
         return "createCardForm";
     }
-    @RequestMapping(value="/create-card", method = RequestMethod.POST)
-    public String createUserAction(Model model,@ModelAttribute("cardForm") CardForm cardForm){
+    @PostMapping(value="/create-card")
+    public ResponseMessage<CardOut> createUserAction(@ModelAttribute("cardForm") CardForm cardForm){
         var test = this.cardController.createCard(ModelMapper.INSTANCE.convert(cardForm));
-
-        model.addAttribute("cardData", cardForm);
-        return "viewCard";
+        if(test.isSuccess())
+        {
+            return test.toType(ModelMapper.INSTANCE.convertToOut(test.getResponse()));
+        }
+        else {
+            return test.toNull();
+        }
     }
 
-    @RequestMapping(value="/view-card/{id}", method = RequestMethod.GET)
-    public String createUserAction(Model model, @PathVariable("id") int id){
-        /*var test = this.cardController.getCardById(id);
-
-        model.addAttribute("cardData", test.getResponse());*/
-        return "viewCard";
+    @GetMapping(value="/view-card/{id}")
+    public ResponseMessage<CardOut> createUserAction(@PathVariable("id") int id){
+        var test = this.cardController.getCardById(id);
+        if(test.isSuccess())
+        {
+            return test.toType(ModelMapper.INSTANCE.convertToOut(test.getResponse()));
+        }
+        else {
+            return test.toNull();
+        }
     }
 
     public int GetByUser(HttpServletRequest httprequest)
@@ -58,40 +70,61 @@ public class CardFrontController {
         return id;
     }
 //var id = Integer.valueOf((String) httprequest.getSession().getAttribute("USER")); HttpServletRequest httprequest
-    @RequestMapping(value="/buy-card-page", method = RequestMethod.GET)
-    public String buyCardList(Model model, HttpServletRequest httprequest){
+    @GetMapping(value="/buy-card-page")
+    public ResponseMessage<List<CardOut>> buyCardList(HttpServletRequest httprequest){
         var user = GetByUser(httprequest);
         if(user == 0)
         {
-            AuthDTO authForm = new AuthDTO();
-            model.addAttribute("connectForm", authForm);
-            return "connectForm";
+            ResponseMessage<List<CardOut>> responseMessage = new ResponseMessage<>(null);
+            responseMessage.setMessage("You must be logged in");
+            responseMessage.setResponseCode(ResponseCode.FORBIDDEN);
+            return responseMessage;
         }
         var test = this.cardController.getAllCardsBuyable();
-        model.addAttribute("cardList", test.getResponse());
-        return "buyCard";
+        if(test.isSuccess())
+        {
+            return test.toType(convertToCardOutList(test.getResponse()));
+        }
+        else {
+            return test.toNull();
+        }
+    }
+
+    private List<CardOut> convertToCardOutList(List<Card> cards) {
+        List<CardOut> cardForms = new ArrayList<>();
+        for (Card card : cards) {
+            CardOut cardForm = ModelMapper.INSTANCE.convertToOut(card);
+            cardForms.add(cardForm);
+        }
+        return cardForms;
     }
 
     @RequestMapping(value="/get-my-cards", method = RequestMethod.GET)
-    public String getMyCards(Model model, HttpServletRequest httprequest){
+    public ResponseMessage<List<CardOut>> getMyCards(HttpServletRequest httprequest){
         var data = httprequest.getSession().getAttribute("USER");
         if(data == null)
         {
-            AuthDTO authForm = new AuthDTO();
-            model.addAttribute("connectForm", authForm);
-            return "connectForm";
+            ResponseMessage<List<CardOut>> responseMessage = new ResponseMessage<>(null);
+            responseMessage.setMessage("You must be logged in");
+            responseMessage.setResponseCode(ResponseCode.FORBIDDEN);
+            return responseMessage;
         }
         var id = (Integer)data;
         if(id == null)
         {
-            AuthDTO authForm = new AuthDTO();
-            model.addAttribute("connectForm", authForm);
-            return "connectForm";
+            ResponseMessage<List<CardOut>> responseMessage = new ResponseMessage<>(null);
+            responseMessage.setMessage("User id is wrong");
+            responseMessage.setResponseCode(ResponseCode.FORBIDDEN);
+            return responseMessage;
         }
-
-        //var test = this.cardController.getAllCardsByUserId(id);
-        //model.addAttribute("cardList", test.getResponse());
-        return "buyerCards";
+        var test = this.cardController.getAllCardsByUserId(httprequest);
+        if(test.isSuccess())
+        {
+            return test.toType(convertToCardOutList(test.getResponse()));
+        }
+        else {
+            return test.toNull();
+        }
     }
 
 }

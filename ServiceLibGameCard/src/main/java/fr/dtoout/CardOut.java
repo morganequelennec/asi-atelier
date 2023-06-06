@@ -85,6 +85,46 @@ public class CardOut {
     private Double energy;
     private Double hp;
 
+    public Boolean getToSell() {
+        return toSell;
+    }
+
+    public void setToSell(Boolean toSell) {
+        this.toSell = toSell;
+    }
+
+    private Boolean toSell;
+
+    public Integer getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Integer userId) {
+        this.userId = userId;
+    }
+
+    private Integer userId;
+
+    public Double getPrice() {
+        return price;
+    }
+
+    public void setPrice(Double price) {
+        this.price = price;
+    }
+
+    private Double price;
+
+    public Double getOriginalHp() {
+        return OriginalHp;
+    }
+
+    public void setOriginalHp(Double originalHp) {
+        OriginalHp = originalHp;
+    }
+
+    private Double OriginalHp;
+
     public Double getAttack() {
         return attack;
     }
