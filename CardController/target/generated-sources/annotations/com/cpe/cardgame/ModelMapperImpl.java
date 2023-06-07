@@ -8,7 +8,7 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-06T22:45:27+0200",
+    date = "2023-06-07T20:42:03+0200",
     comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 public class ModelMapperImpl implements ModelMapper {
@@ -23,6 +23,7 @@ public class ModelMapperImpl implements ModelMapper {
 
         card.setOriginalHp( user.getOriginalHp() );
         card.setToSell( user.getToSell() );
+        card.setId( user.getId() );
         card.setName( user.getName() );
         card.setDescription( user.getDescription() );
         card.setFamily( user.getFamily() );
@@ -135,6 +136,7 @@ public class ModelMapperImpl implements ModelMapper {
         cardIn.setOriginalHp( user.getOriginalHp() );
         cardIn.setUserId( user.getUserId() );
         cardIn.setToSell( user.getToSell() );
+        cardIn.setId( user.getId() );
 
         return cardIn;
     }

@@ -3,7 +3,7 @@ package fr.dtoin;
 
 
 public class CardIn {
-
+    private Integer Id;
     private String name;
     private String description;
     private String family;
@@ -112,5 +112,13 @@ public class CardIn {
 
     public void setToSell(Boolean toSell) {
         this.toSell = toSell;
+    }
+
+    public Integer getId() {
+        return Id;
+    }
+
+    public void setId(Integer id) {
+        Id = id;
     }
 }

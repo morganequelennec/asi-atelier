@@ -2,6 +2,7 @@ package com.cpe.cardgame.controller;
 
 
 import com.cpe.cardgame.ModelMapper;
+import com.cpe.cardgame.ModelMapperImpl;
 import com.cpe.cardgame.entity.Card;
 import fr.dtoout.CardOut;
 import fr.utils.ResponseCode;
@@ -33,7 +34,8 @@ public class CardFrontController extends BaseController {
     }
     @PostMapping(value="/create-card")
     public ResponseMessage<CardOut> createUserAction(@ModelAttribute("cardForm") CardForm cardForm){
-        var test = this.cardController.createCard(ModelMapper.INSTANCE.convert(cardForm));
+        Card c =ModelMapper.INSTANCE.convert(cardForm);
+        var test = this.cardController.createCard(ModelMapperImpl.INSTANCE.convertToIn(c));
         if(test.isSuccess())
         {
             return test.toType(ModelMapper.INSTANCE.convertToOut(test.getResponse()));

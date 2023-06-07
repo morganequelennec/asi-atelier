@@ -2,11 +2,13 @@ package com.cpe.cardgame.controller;
 
 
 import com.cpe.cardgame.ModelMapper;
+import com.cpe.cardgame.ModelMapperImpl;
 import com.cpe.cardgame.entity.Card;
 import com.cpe.cardgame.service.CardService;
 
 
 import fr.api.UserApi;
+import fr.dtoin.CardIn;
 import fr.mapper.ModelMapperCommon;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
@@ -58,8 +60,8 @@ public class CardController extends BaseController {
     }
 
     @PostMapping("/card")
-    public ResponseMessage<Card> createCard(Card card) {
-        return cardService.updateCard(card);
+    public ResponseMessage<Card> createCard(@RequestBody CardIn card) {
+        return cardService.updateCard(ModelMapperImpl.INSTANCE.convert(card));
     }
 
     @GetMapping("/card/{id}")

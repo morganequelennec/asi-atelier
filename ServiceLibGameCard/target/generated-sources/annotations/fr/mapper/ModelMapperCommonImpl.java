@@ -14,7 +14,7 @@ import fr.dtoout.UserOut;
 /*
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-06T22:08:11+0200",
+    date = "2023-06-07T20:35:00+0200",
     comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.5 (Amazon.com Inc.)"
 )
 */
@@ -40,6 +40,7 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
         cardIn.setOriginalHp( user.getOriginalHp() );
         cardIn.setUserId( user.getUserId() );
         cardIn.setToSell( user.getToSell() );
+        cardIn.setId( user.getId() );
 
         return cardIn;
     }
@@ -52,6 +53,7 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
 
         CardOut cardOut = new CardOut();
 
+        cardOut.setId( user.getId() );
         cardOut.setName( user.getName() );
         cardOut.setDescription( user.getDescription() );
         cardOut.setFamily( user.getFamily() );
