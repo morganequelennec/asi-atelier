@@ -2,6 +2,15 @@ package fr.dtoin;
 
 
 public class UserIn {
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    private Integer id;
     private String login;
     private String pwd;
     private Double account;
@@ -17,6 +26,9 @@ public class UserIn {
         this.surName = surName;
         this.email = email;
         this.session = session;
+    }
+
+    public UserIn() {
     }
 
     public String getSession() {

@@ -69,26 +69,37 @@
     </div>
 </nav>
 <div class="d-flex justify-content-center align-items-center h-100">
+    <label for="name">Name:</label>
+    <input type="text" id="name" />
+
+    <label for="mise">Mise:</label>
+    <input type="number" id="mise" />
     <button class="btn btn-primary p-4" onclick="createParty()">Create a Party</button>
     <a href="#" style="display: none" id="link-to">Generated Party</a>
 </div>
 <script>
     function createParty() {
         // Send a request to create a party
-        // You can modify this part to match your backend API endpoint
-        // Here's an example of using Fetch API to make a POST request
+        var name = document.getElementById("name").value;
+        var mise = parseFloat(document.getElementById("mise").value);
+
+        // Create an object in the PlayPartyCreateViewModel format
+        var partyData = {
+            name: name,
+            mise: mise
+        };
         fetch(getHost()+getGameService()+'/create-play-party', {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({}) // You can pass any data as the request body if needed
+            body: JSON.stringify(partyData) // You can pass any data as the request body if needed
         })
             .then(response => response.json())
             .then(data => {
                 // Handle the response data and display the created party
                 console.log('Created party:', data);
-                document.getElementById("link-to").href = data.message;
+                document.getElementById("link-to").href = "http://localhost/front/playParty.html?id="+data.message;
                 document.getElementById("link-to").style = "";
             })
             .catch(error => {

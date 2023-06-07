@@ -7,6 +7,8 @@ import com.cpe.cardgame.service.CardService;
 
 
 import fr.api.UserApi;
+import fr.dtoin.CardIn;
+import fr.dtoout.CardOut;
 import fr.mapper.ModelMapperCommon;
 import fr.utils.ResponseCode;
 import fr.utils.ResponseMessage;
@@ -58,8 +60,9 @@ public class CardController extends BaseController {
     }
 
     @PostMapping("/card")
-    public ResponseMessage<Card> createCard(Card card) {
-        return cardService.updateCard(card);
+    public ResponseMessage<CardOut> createCard(@RequestBody CardIn card) {
+        var result = cardService.updateCard(ModelMapper.INSTANCE.convert(card));
+        return result.toType(ModelMapper.INSTANCE.convertToOut(result.getResponse()));
     }
 
     @GetMapping("/card/{id}")

@@ -103,5 +103,27 @@ public class PlayParty {
     @Column(name = "card_player_b")
     private Integer cardPlayerB;
 
+    public Double getMise() {
+        return mise;
+    }
+
+    public void setMise(Double mise) {
+        this.mise = mise;
+    }
+
+    public String getPartyName() {
+        return partyName;
+    }
+
+    public void setPartyName(String partyName) {
+        this.partyName = partyName;
+    }
+
+    @Column(name = "mise")
+    private Double mise;
+
+    @Column(name = "party_name")
+    private String partyName;
+
 
 }

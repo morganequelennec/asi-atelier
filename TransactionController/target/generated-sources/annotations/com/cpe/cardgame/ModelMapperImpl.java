@@ -14,8 +14,8 @@ import javax.annotation.processing.Generated;
 
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-06T22:08:19+0200",
-    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.5 (Amazon.com Inc.)"
+    date = "2023-06-07T20:24:33+0200",
+    comments = "version: 1.5.3.Final, compiler: javac, environment: Java 17.0.2 (Oracle Corporation)"
 )
 public class ModelMapperImpl implements ModelMapper {
 
@@ -158,6 +158,7 @@ public class ModelMapperImpl implements ModelMapper {
         userOut.setLastName( user.getLastName() );
         userOut.setSurName( user.getSurName() );
         userOut.setEmail( user.getEmail() );
+        userOut.setId( user.getId() );
 
         return userOut;
     }
@@ -168,23 +169,16 @@ public class ModelMapperImpl implements ModelMapper {
             return null;
         }
 
-        String session = null;
-        String login = null;
-        String pwd = null;
-        Double account = null;
-        String lastName = null;
-        String surName = null;
-        String email = null;
+        UserIn userIn = new UserIn();
 
-        session = user.getSession();
-        login = user.getLogin();
-        pwd = user.getPwd();
-        account = user.getAccount();
-        lastName = user.getLastName();
-        surName = user.getSurName();
-        email = user.getEmail();
-
-        UserIn userIn = new UserIn( login, pwd, account, lastName, surName, email, session );
+        userIn.setId( user.getId() );
+        userIn.setSession( user.getSession() );
+        userIn.setLogin( user.getLogin() );
+        userIn.setPwd( user.getPwd() );
+        userIn.setAccount( user.getAccount() );
+        userIn.setLastName( user.getLastName() );
+        userIn.setSurName( user.getSurName() );
+        userIn.setEmail( user.getEmail() );
 
         return userIn;
     }
@@ -197,6 +191,8 @@ public class ModelMapperImpl implements ModelMapper {
 
         CardIn cardIn = new CardIn();
 
+        cardIn.setId( user.getId() );
+        cardIn.setAttack( user.getAttack() );
         cardIn.setName( user.getName() );
         cardIn.setDescription( user.getDescription() );
         cardIn.setFamily( user.getFamily() );
@@ -221,6 +217,7 @@ public class ModelMapperImpl implements ModelMapper {
 
         CardOut cardOut = new CardOut();
 
+        cardOut.setId( user.getId() );
         cardOut.setName( user.getName() );
         cardOut.setDescription( user.getDescription() );
         cardOut.setFamily( user.getFamily() );
@@ -233,6 +230,7 @@ public class ModelMapperImpl implements ModelMapper {
         cardOut.setUserId( user.getUserId() );
         cardOut.setPrice( user.getPrice() );
         cardOut.setOriginalHp( user.getOriginalHp() );
+        cardOut.setAttack( user.getAttack() );
 
         return cardOut;
     }

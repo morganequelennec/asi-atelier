@@ -6,4 +6,5 @@ com\cpe\cardgame\controller\PlayPartyController.class
 com\cpe\cardgame\ModelMapper.class
 com\cpe\cardgame\ModelMapperImpl.class
 com\cpe\cardgame\model\PlayParty.class
+com\cpe\cardgame\model\PlayPartyCreateViewModel.class
 com\cpe\cardgame\controller\PlayPartyFrontController.class

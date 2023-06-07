@@ -33,10 +33,10 @@ public class CardFrontController extends BaseController {
     }
     @PostMapping(value="/create-card")
     public ResponseMessage<CardOut> createUserAction(@ModelAttribute("cardForm") CardForm cardForm){
-        var test = this.cardController.createCard(ModelMapper.INSTANCE.convert(cardForm));
+        var test = this.cardController.createCard(ModelMapper.INSTANCE.convertFormToIn(cardForm));
         if(test.isSuccess())
         {
-            return test.toType(ModelMapper.INSTANCE.convertToOut(test.getResponse()));
+            return test.toType(test.getResponse());
         }
         else {
             return test.toNull();

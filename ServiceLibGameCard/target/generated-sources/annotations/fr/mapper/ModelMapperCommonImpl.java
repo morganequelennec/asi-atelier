@@ -14,8 +14,8 @@ import fr.dtoout.UserOut;
 /*
 @Generated(
     value = "org.mapstruct.ap.MappingProcessor",
-    date = "2023-06-06T22:08:11+0200",
-    comments = "version: 1.5.5.Final, compiler: javac, environment: Java 17.0.5 (Amazon.com Inc.)"
+    date = "2023-06-07T20:00:03+0200",
+    comments = "version: 1.5.5.Final, compiler: Eclipse JDT (IDE) 3.33.0.v20230218-1114, environment: Java 17.0.6 (Eclipse Adoptium)"
 )
 */
 public class ModelMapperCommonImpl implements ModelMapperCommon {
@@ -28,18 +28,20 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
 
         CardIn cardIn = new CardIn();
 
-        cardIn.setName( user.getName() );
-        cardIn.setDescription( user.getDescription() );
-        cardIn.setFamily( user.getFamily() );
         cardIn.setAffinity( user.getAffinity() );
-        cardIn.setImgUrl( user.getImgUrl() );
-        cardIn.setSmallImgUrl( user.getSmallImgUrl() );
+        cardIn.setAttack( user.getAttack() );
+        cardIn.setDescription( user.getDescription() );
         cardIn.setEnergy( user.getEnergy() );
+        cardIn.setFamily( user.getFamily() );
         cardIn.setHp( user.getHp() );
-        cardIn.setPrice( user.getPrice() );
+        cardIn.setId( user.getId() );
+        cardIn.setImgUrl( user.getImgUrl() );
+        cardIn.setName( user.getName() );
         cardIn.setOriginalHp( user.getOriginalHp() );
-        cardIn.setUserId( user.getUserId() );
+        cardIn.setPrice( user.getPrice() );
+        cardIn.setSmallImgUrl( user.getSmallImgUrl() );
         cardIn.setToSell( user.getToSell() );
+        cardIn.setUserId( user.getUserId() );
 
         return cardIn;
     }
@@ -52,18 +54,20 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
 
         CardOut cardOut = new CardOut();
 
-        cardOut.setName( user.getName() );
-        cardOut.setDescription( user.getDescription() );
-        cardOut.setFamily( user.getFamily() );
         cardOut.setAffinity( user.getAffinity() );
-        cardOut.setImgUrl( user.getImgUrl() );
-        cardOut.setSmallImgUrl( user.getSmallImgUrl() );
+        cardOut.setAttack( user.getAttack() );
+        cardOut.setDescription( user.getDescription() );
         cardOut.setEnergy( user.getEnergy() );
+        cardOut.setFamily( user.getFamily() );
         cardOut.setHp( user.getHp() );
+        cardOut.setId( user.getId() );
+        cardOut.setImgUrl( user.getImgUrl() );
+        cardOut.setName( user.getName() );
+        cardOut.setOriginalHp( user.getOriginalHp() );
+        cardOut.setPrice( user.getPrice() );
+        cardOut.setSmallImgUrl( user.getSmallImgUrl() );
         cardOut.setToSell( user.getToSell() );
         cardOut.setUserId( user.getUserId() );
-        cardOut.setPrice( user.getPrice() );
-        cardOut.setOriginalHp( user.getOriginalHp() );
 
         return cardOut;
     }
@@ -74,25 +78,18 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
             return null;
         }
 
-        Integer userIdA = null;
-        Integer userIdB = null;
-        String partyCode = null;
-        Boolean started = null;
-        Integer winnerId = null;
-        Integer currentPlayerId = null;
-        Integer cardPlayerA = null;
-        Integer cardPlayerB = null;
+        PartyIn partyIn = new PartyIn();
 
-        userIdA = user.getUserIdA();
-        userIdB = user.getUserIdB();
-        partyCode = user.getPartyCode();
-        started = user.getStarted();
-        winnerId = user.getWinnerId();
-        currentPlayerId = user.getCurrentPlayerId();
-        cardPlayerA = user.getCardPlayerA();
-        cardPlayerB = user.getCardPlayerB();
-
-        PartyIn partyIn = new PartyIn( userIdA, userIdB, partyCode, started, winnerId, currentPlayerId, cardPlayerA, cardPlayerB );
+        partyIn.setCardPlayerA( user.getCardPlayerA() );
+        partyIn.setCardPlayerB( user.getCardPlayerB() );
+        partyIn.setCurrentPlayerId( user.getCurrentPlayerId() );
+        partyIn.setMise( user.getMise() );
+        partyIn.setPartyCode( user.getPartyCode() );
+        partyIn.setPartyName( user.getPartyName() );
+        partyIn.setStarted( user.getStarted() );
+        partyIn.setUserIdA( user.getUserIdA() );
+        partyIn.setUserIdB( user.getUserIdB() );
+        partyIn.setWinnerId( user.getWinnerId() );
 
         return partyIn;
     }
@@ -105,14 +102,16 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
 
         PartyOut partyOut = new PartyOut();
 
-        partyOut.setUserIdA( user.getUserIdA() );
-        partyOut.setUserIdB( user.getUserIdB() );
-        partyOut.setPartyCode( user.getPartyCode() );
-        partyOut.setStarted( user.getStarted() );
-        partyOut.setWinnerId( user.getWinnerId() );
-        partyOut.setCurrentPlayerId( user.getCurrentPlayerId() );
         partyOut.setCardPlayerA( user.getCardPlayerA() );
         partyOut.setCardPlayerB( user.getCardPlayerB() );
+        partyOut.setCurrentPlayerId( user.getCurrentPlayerId() );
+        partyOut.setMise( user.getMise() );
+        partyOut.setPartyCode( user.getPartyCode() );
+        partyOut.setPartyName( user.getPartyName() );
+        partyOut.setStarted( user.getStarted() );
+        partyOut.setUserIdA( user.getUserIdA() );
+        partyOut.setUserIdB( user.getUserIdB() );
+        partyOut.setWinnerId( user.getWinnerId() );
 
         return partyOut;
     }
@@ -123,23 +122,16 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
             return null;
         }
 
-        String session = null;
-        String login = null;
-        String pwd = null;
-        Double account = null;
-        String lastName = null;
-        String surName = null;
-        String email = null;
+        UserIn userIn = new UserIn();
 
-        session = user.getSession();
-        login = user.getLogin();
-        pwd = user.getPwd();
-        account = user.getAccount();
-        lastName = user.getLastName();
-        surName = user.getSurName();
-        email = user.getEmail();
-
-        UserIn userIn = new UserIn( login, pwd, account, lastName, surName, email, session );
+        userIn.setAccount( user.getAccount() );
+        userIn.setEmail( user.getEmail() );
+        userIn.setId( user.getId() );
+        userIn.setLastName( user.getLastName() );
+        userIn.setLogin( user.getLogin() );
+        userIn.setPwd( user.getPwd() );
+        userIn.setSession( user.getSession() );
+        userIn.setSurName( user.getSurName() );
 
         return userIn;
     }
@@ -152,13 +144,14 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
 
         UserOut userOut = new UserOut();
 
-        userOut.setSession( user.getSession() );
+        userOut.setAccount( user.getAccount() );
+        userOut.setEmail( user.getEmail() );
+        userOut.setId( user.getId() );
+        userOut.setLastName( user.getLastName() );
         userOut.setLogin( user.getLogin() );
         userOut.setPwd( user.getPwd() );
-        userOut.setAccount( user.getAccount() );
-        userOut.setLastName( user.getLastName() );
+        userOut.setSession( user.getSession() );
         userOut.setSurName( user.getSurName() );
-        userOut.setEmail( user.getEmail() );
 
         return userOut;
     }
@@ -171,8 +164,8 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
 
         StoreOrderOut storeOrderOut = new StoreOrderOut();
 
-        storeOrderOut.setUserId( user.getUserId() );
         storeOrderOut.setCardId( user.getCardId() );
+        storeOrderOut.setUserId( user.getUserId() );
 
         return storeOrderOut;
     }
@@ -185,8 +178,8 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
 
         StoreOrderIn storeOrderIn = new StoreOrderIn();
 
-        storeOrderIn.setUserId( user.getUserId() );
         storeOrderIn.setCardId( user.getCardId() );
+        storeOrderIn.setUserId( user.getUserId() );
 
         return storeOrderIn;
     }
@@ -199,10 +192,10 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
 
         StoreTransactionOut storeTransactionOut = new StoreTransactionOut();
 
-        storeTransactionOut.setUserId( user.getUserId() );
-        storeTransactionOut.setCardId( user.getCardId() );
         storeTransactionOut.setAction( user.getAction() );
+        storeTransactionOut.setCardId( user.getCardId() );
         storeTransactionOut.setTimestamp( user.getTimestamp() );
+        storeTransactionOut.setUserId( user.getUserId() );
 
         return storeTransactionOut;
     }
@@ -215,10 +208,10 @@ public class ModelMapperCommonImpl implements ModelMapperCommon {
 
         StoreTransactionIn storeTransactionIn = new StoreTransactionIn();
 
-        storeTransactionIn.setUserId( user.getUserId() );
-        storeTransactionIn.setCardId( user.getCardId() );
         storeTransactionIn.setAction( user.getAction() );
+        storeTransactionIn.setCardId( user.getCardId() );
         storeTransactionIn.setTimestamp( user.getTimestamp() );
+        storeTransactionIn.setUserId( user.getUserId() );
 
         return storeTransactionIn;
     }

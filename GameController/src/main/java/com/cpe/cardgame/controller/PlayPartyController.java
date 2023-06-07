@@ -2,6 +2,7 @@ package com.cpe.cardgame.controller;
 
 import com.cpe.cardgame.ModelMapper;
 import com.cpe.cardgame.model.PlayParty;
+import com.cpe.cardgame.model.PlayPartyCreateViewModel;
 import com.cpe.cardgame.model.PlayPartyViewModel;
 import com.cpe.cardgame.service.PlayPartyService;
 import fr.api.CardApi;
@@ -103,7 +104,7 @@ public class PlayPartyController extends BaseController {
     }
 
     @PostMapping("/create-play-party")
-    public ResponseMessage<PartyOut> createPlayParty(HttpServletRequest httprequest) {
+    public ResponseMessage<PartyOut> createPlayParty(HttpServletRequest httprequest, @RequestBody PlayPartyCreateViewModel playPartyCreateViewModel) {
         int user = GetByUser(httprequest);
         if (user == 0) {
             ResponseMessage<PartyOut> playPartyResponseMessage = new ResponseMessage<>(null);
@@ -112,7 +113,7 @@ public class PlayPartyController extends BaseController {
             return playPartyResponseMessage;
         }
 
-        return playPartyService.createPlayParty(user);
+        return playPartyService.createPlayParty(user, playPartyCreateViewModel);
     }
 
     @PostMapping("/update-user-card-play-party/{playPartyId}/{cardId}")

@@ -4,6 +4,7 @@ package com.cpe.cardgame.controller;
 import com.cpe.cardgame.ModelMapper;
 import com.cpe.cardgame.entity.UserGame;
 import com.cpe.cardgame.service.UserService;
+import fr.dtoin.UserIn;
 import fr.dtoout.UserOut;
 import fr.mapper.ModelMapperCommon;
 import fr.utils.KeyHost;
@@ -19,13 +20,7 @@ import org.springframework.ui.Model;
 
 import org.springframework.boot.autoconfigure.security.SecurityProperties.User;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 public class UserController extends BaseController {
@@ -38,8 +33,8 @@ public class UserController extends BaseController {
     }
 
     @PostMapping("/users")
-    public ResponseMessage<UserOut> createUser(UserGame userGame) {
-        var model = this.userService.updateUser(userGame);
+    public ResponseMessage<UserOut> createUser(@RequestBody UserIn userGame) {
+        var model = this.userService.updateUser(ModelMapper.INSTANCE.convert(userGame));
         if(model.isSuccess())
         {
             ResponseMessage<UserOut> responseMessage = new ResponseMessage<>(

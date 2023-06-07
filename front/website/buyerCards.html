@@ -102,24 +102,40 @@
             var viewButton = document.createElement("a");
             viewButton.classList.add("button", "view-button");
             viewButton.textContent = "View";
-            viewButton.href = getHost()+getCardService()+"/view-card/" + card.id;
+            viewButton.href = getHost() + getCardService() + "/view-card/" + card.id;
             cardDiv.appendChild(viewButton);
 
-            var sellForm = document.createElement("form");
-            sellForm.method = "post";
-            sellForm.action = getHost()+getCardService()+"/sell-card/" + card.id;
-
-            var sellButton = document.createElement("input");
-            sellButton.type = "submit";
+            var sellButton = document.createElement("button");
             sellButton.classList.add("button", "sell-button");
-            sellButton.value = "Sell";
+            sellButton.textContent = "Sell";
 
-            sellForm.appendChild(sellButton);
-            cardDiv.appendChild(sellForm);
+            sellButton.addEventListener("click", function() {
+                // Send AJAX request
+                fetch(getHost() + getTransactionService() + "/storeOrdersCard/MakeSell/" + card.id, {
+                    method: "GET"
+                })
+                    .then(function(response) {
+                        if (response.ok) {
+                            return response.text();
+                        } else {
+                            throw new Error("Network response was not OK.");
+                        }
+                    })
+                    .then(function(data) {
+                        // Display AJAX response in a popup
+                        alert(data);
+                    })
+                    .catch(function(error) {
+                        // Handle error
+                        console.error("Error:", error);
+                    });
+            });
 
+            cardDiv.appendChild(sellButton);
             cardContainer.appendChild(cardDiv);
         });
     }
+
 
 
 </script>

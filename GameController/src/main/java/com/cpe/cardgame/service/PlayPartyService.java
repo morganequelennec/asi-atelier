@@ -2,6 +2,7 @@ package com.cpe.cardgame.service;
 
 import com.cpe.cardgame.ModelMapper;
 import com.cpe.cardgame.model.PlayParty;
+import com.cpe.cardgame.model.PlayPartyCreateViewModel;
 import com.cpe.cardgame.model.PlayPartyViewModel;
 import com.cpe.cardgame.repositories.PlayPartyRepository;
 import fr.api.CardApi;
@@ -50,8 +51,16 @@ public class PlayPartyService {
         return responseMessage;
     }
 
-    public ResponseMessage<PartyOut> createPlayParty(int userId) {
+    public ResponseMessage<PartyOut> createPlayParty(int userId, PlayPartyCreateViewModel playPartyCreateViewModel) {
         var playerCards = this.cardRepository.getAllCardsByUserId(userId);
+        var user = (new UserApi()).getUserById(userId);
+        if(user.getResponse().getAccount()<playPartyCreateViewModel.getMise())
+        {
+            ResponseMessage<PartyOut> responseMessage = new ResponseMessage<PartyOut>(null);
+            responseMessage.setMessage("You can't bet more than what you have !");
+            responseMessage.setResponseCode(ResponseCode.ERROR);
+            return responseMessage;
+        }
         PlayParty playParty = new PlayParty();
         playParty.setCardPlayerB(0);
         playParty.setWinnerId(0);
@@ -60,6 +69,8 @@ public class PlayPartyService {
         playParty.setUserIdA(userId);
         playParty.setPartyCode("BVBDBVDN");
         playParty.setStarted(Boolean.TRUE);
+        playParty.setPartyName(playPartyCreateViewModel.getName());
+        playParty.setMise(playPartyCreateViewModel.getMise());
 
         if (playerCards.getResponse().size() > 0) {
             playParty.setCardPlayerA(playerCards.getResponse().get(0).getId());
@@ -104,6 +115,9 @@ public class PlayPartyService {
             return responseMessage;
         }
 
+        var user = userRepository.getUserById(userId);
+
+
         var cardsPlayerA = cardRepository.getAllCardsByUserId(playParty.getResponse().getUserIdA());
         var cardsPlayerB = cardRepository.getAllCardsByUserId(playParty.getResponse().getUserIdB());
         var thisUserCards = cardRepository.getAllCardsByUserId(userId);
@@ -113,6 +127,21 @@ public class PlayPartyService {
         playPartyViewModel.setCardUserList(convertToCardInList(thisUserCards.getResponse()));
         playPartyViewModel.setPlayerCardsA(convertToCardInList(cardsPlayerA.getResponse()));
         playPartyViewModel.setPlayerCardsB(convertToCardInList(cardsPlayerB.getResponse()));
+
+        if(playParty.getResponse().getWinnerId()!=0)
+        {
+            if(playParty.getResponse().getWinnerId()==playParty.getResponse().getUserIdA())
+            {
+                playPartyViewModel.setPlayerWinnerSide(0);
+            }
+            if(playParty.getResponse().getWinnerId()==playParty.getResponse().getUserIdB())
+            {
+                playPartyViewModel.setPlayerWinnerSide(1);
+            }
+            var winner_name = this.userRepository.getUserById(playParty.getResponse().getWinnerId());
+            playPartyViewModel.setWinnerGain(playParty.getResponse().getMise());
+            playPartyViewModel.setWinnerName("The player "+winner_name.getResponse().getSurName() +" won "+playParty.getResponse().getMise() + " credits !");
+        }
 
         ResponseMessage<PlayPartyViewModel> responseMessage = new ResponseMessage<>(playPartyViewModel);
         responseMessage.setResponseCode(ResponseCode.SUCCESS);
@@ -243,13 +272,13 @@ public class PlayPartyService {
                 if(result.get().getUserIdA()==result.get().getWinnerId())
                 {
                     responseMessage.setResponseCode(ResponseCode.SUCCESS);
-                    responseMessage.setMessage("Player A is the winner !");
+                    responseMessage.setMessage("Player A is the winner of "+result.get().getMise() + " credits");
                     return responseMessage;
                 }
                 else if(result.get().getUserIdB()==result.get().getWinnerId())
                 {
                     responseMessage.setResponseCode(ResponseCode.SUCCESS);
-                    responseMessage.setMessage("Player B is the winner !");
+                    responseMessage.setMessage("Player B is the winner of "+result.get().getMise() + " credits");
                     return responseMessage;
                 }
                 else
@@ -308,7 +337,9 @@ public class PlayPartyService {
                         {
                             card_b.setHp(0.0);
                             result.get().setWinnerId(player_a.getId());
-                            player_a.setAccount(player_a.getAccount()+40.0);
+                            player_a.setAccount(player_a.getAccount()+result.get().getMise());
+                            player_b.setAccount(player_b.getAccount()-result.get().getMise());
+                            responseMessage.setMessage("Player A is the winner of "+result.get().getMise() + " credits");
                         }
                         else
                         {
@@ -321,7 +352,9 @@ public class PlayPartyService {
                         {
                             card_a.setHp(0.0);
                             result.get().setWinnerId(player_b.getId());
-                            player_b.setAccount(player_b.getAccount()+40.0);
+                            player_b.setAccount(player_b.getAccount()+result.get().getMise());
+                            player_a.setAccount(player_a.getAccount()-result.get().getMise());
+                            responseMessage.setMessage("Player B is the winner of "+result.get().getMise() + " credits");
                         }
                         else
                         {

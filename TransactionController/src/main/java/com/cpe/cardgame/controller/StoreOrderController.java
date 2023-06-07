@@ -181,6 +181,15 @@ public class StoreOrderController extends BaseController {
             responseMessage.setMessage("You dont have enough money");
             return responseMessage;
         }
+        if(the_user.getResponse().getId()==the_card.getResponse().getUserId())
+        {
+            ResponseMessage<StoreOrderOut> responseMessage = new ResponseMessage<>(
+                    null
+            );
+            responseMessage.setResponseCode(ResponseCode.FORBIDDEN);
+            responseMessage.setMessage("You already own this card");
+            return responseMessage;
+        }
         StoreOrder storeOrder =new StoreOrder();
         storeOrder.setCardId(the_card.getResponse().getId());
         storeOrder.setUserId(the_user.getResponse().getId());
@@ -236,7 +245,7 @@ public class StoreOrderController extends BaseController {
         var the_user = userApi.getUserById(user);
         var the_card = cardApi.getCard(cardId);
         //Prepare sell order with transaction
-        StoreOrder storeOrder =new StoreOrder();
+        StoreOrder storeOrder = new StoreOrder();
         storeOrder.setCardId(the_card.getResponse().getId());
         storeOrder.setUserId(the_user.getResponse().getId());
         var storeOrderResult = this.storeOrderService.getStoreOrderByTuple(the_user.getResponse().getId(),the_card.getResponse().getId());

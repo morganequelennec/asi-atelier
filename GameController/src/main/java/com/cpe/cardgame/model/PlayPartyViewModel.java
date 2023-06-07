@@ -45,4 +45,33 @@ public class PlayPartyViewModel {
     private List<CardIn> playerCardsA;
     private List<CardIn> playerCardsB;
 
+    public String getWinnerName() {
+        return winnerName;
+    }
+
+    public void setWinnerName(String winnerName) {
+        this.winnerName = winnerName;
+    }
+
+    public Double getWinnerGain() {
+        return winnerGain;
+    }
+
+    public void setWinnerGain(Double winnerGain) {
+        this.winnerGain = winnerGain;
+    }
+
+    private String winnerName = "";
+    private Double winnerGain = 0.0;
+
+    public Integer getPlayerWinnerSide() {
+        return playerWinnerSide;
+    }
+
+    public void setPlayerWinnerSide(Integer playerWinnerSide) {
+        this.playerWinnerSide = playerWinnerSide;
+    }
+
+    private Integer playerWinnerSide = -1;
+
 }

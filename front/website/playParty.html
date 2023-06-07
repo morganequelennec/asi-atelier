@@ -132,6 +132,14 @@
                 const playerCardsA = data.response.playerCardsA;
                 const playerCardsB = data.response.playerCardsB;
 
+                try{
+                    if(response.response.winnerName != "")
+                    {
+                        alert(response.response.winnerName)// Player B is winner of ...
+                    }
+                }
+                catch {}
+
                 // Create HTML elements dynamically
                 const fullContentDiv = document.createElement('div');
                 fullContentDiv.id = 'full-content';
@@ -249,11 +257,9 @@
 
 
 
-
     function extractIdFromUrl() {
-         // Get the current URL path
-        const id = sessionStorage.getItem("id") // Extract the last segment of the URL path
-
+        const urlParams = new URLSearchParams(window.location.search);
+        const id = urlParams.get('id');
         return id;
     }
 
@@ -287,6 +293,9 @@
 
             }
         }
+        else if (playerParty.userIdB == 0) {
+            alert('You cant join without cards, buy cards !')
+        }
 
         function sendFightRequest(playerId) {
             var selectedCard;
@@ -307,6 +316,13 @@
                     while (container.firstChild) {
                         container.removeChild(container.firstChild);
                     }
+                    try{
+                        if(response.message != "")
+                        {
+                            alert(response.message)// Player B is winner of ...
+                        }
+                    }
+                    catch {}
                     const id = extractIdFromUrl();
                     var resf = generatePlayerPartyHTML(id)
                 }

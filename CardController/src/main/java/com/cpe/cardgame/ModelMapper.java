@@ -16,6 +16,8 @@ public interface ModelMapper {
     Card convert(CardOut user);
 
     Card convert(CardForm user);
+    CardIn convertFormToIn(CardForm user);
+    CardOut convertFormToOut(CardForm user);
     CardForm convert(Card user);
     CardIn convertToIn(Card user);
     CardOut convertToOut(Card user);

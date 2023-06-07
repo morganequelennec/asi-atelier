@@ -4,12 +4,40 @@ package fr.dtoin;
 
 public class CardIn {
 
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    private Integer id;
     private String name;
     private String description;
     private String family;
     private String affinity;
     private String imgUrl;
     private String smallImgUrl;
+
+    public Double getDefence() {
+        return defence;
+    }
+
+    public void setDefence(Double defence) {
+        this.defence = defence;
+    }
+
+    public Double getAttack() {
+        return attack;
+    }
+
+    public void setAttack(Double attack) {
+        this.attack = attack;
+    }
+
+    private Double defence;
+    private Double attack;
     private Double energy;
     private Double hp;
     private Double price;

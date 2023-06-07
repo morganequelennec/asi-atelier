@@ -119,4 +119,24 @@ public class PartyOut {
     private Integer cardPlayerB;
 
 
+    public Double getMise() {
+        return mise;
+    }
+
+    public void setMise(Double mise) {
+        this.mise = mise;
+    }
+
+    public String getPartyName() {
+        return partyName;
+    }
+
+    public void setPartyName(String partyName) {
+        this.partyName = partyName;
+    }
+
+    private Double mise;
+
+    private String partyName;
+
 }
